@@ -9,11 +9,20 @@ const Footer = () => {
   const { language } = useLanguage();
 
   const quickLinks = [
-    { key: 'home', path: `/${language}` },
-    { key: 'about', path: `/${language}/about` },
-    { key: 'services', path: `/${language}/services` },
-    { key: 'portfolio', path: `/${language}/portfolio` },
+    { key: 'home', section: 'hero' },
+    { key: 'about', section: 'why-us' },
+    { key: 'services', section: 'services' },
+    { key: 'portfolio', section: 'case-study' },
   ];
+
+  const handleScrollTo = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = `/${language}#${sectionId}`;
+    }
+  };
 
   const services = [
     { key: 'paidAds', slug: 'paid-ads-campaigns' },
@@ -67,12 +76,12 @@ const Footer = () => {
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.key}>
-                  <Link
-                    to={link.path}
+                  <button
+                    onClick={() => handleScrollTo(link.section)}
                     className="text-background/80 hover:text-primary transition-colors"
                   >
                     {t(`nav.${link.key}`)}
-                  </Link>
+                  </button>
                 </li>
               ))}
             </ul>

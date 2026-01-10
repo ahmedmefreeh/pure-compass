@@ -24,7 +24,7 @@ const WhyUsSection = () => {
   ];
 
   return (
-    <section ref={ref} className="section-padding bg-muted/30">
+    <section id="why-us" ref={ref} className="section-padding bg-muted/30">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
