@@ -101,7 +101,6 @@ const HeroSection = () => {
               <Lottie 
                 animationData={animationData} 
                 loop={false}
-                autoplay={false}
                 className="w-full max-w-lg"
               />
             )}

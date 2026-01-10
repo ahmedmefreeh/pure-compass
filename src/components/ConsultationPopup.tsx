@@ -62,9 +62,9 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background rounded-2xl shadow-2xl z-[101] overflow-auto w-[calc(100%-2rem)] max-w-lg max-h-[85vh]"
+            className="fixed inset-4 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 bg-background rounded-2xl shadow-2xl z-[101] overflow-hidden sm:w-[calc(100%-2rem)] sm:max-w-lg flex flex-col max-h-[calc(100vh-2rem)] sm:max-h-[85vh]"
           >
-            <div className="p-5 sm:p-6 md:p-8">
+            <div className="p-5 sm:p-6 md:p-8 overflow-y-auto flex-1">
               {/* Header */}
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <h2 className="text-xl sm:text-2xl font-bold">{t('common.bookConsultation')}</h2>
