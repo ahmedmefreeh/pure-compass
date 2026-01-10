@@ -46,14 +46,17 @@ const CaseStudySection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="order-1 lg:order-2"
           >
-            <div className="relative aspect-video rounded-2xl overflow-hidden bg-primary-dark/50 border-4 border-white/20">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-colors">
+            <div className="relative aspect-video rounded-2xl overflow-hidden border-4 border-white/20">
+              <img 
+                src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=450&fit=crop"
+                alt="Medical Center Case Study"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-primary-dark/60 flex items-center justify-center">
+                <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-colors backdrop-blur-sm">
                   <Play className="w-8 h-8 text-white fill-white" />
                 </div>
               </div>
-              {/* Placeholder for case study video/image */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary-dark/40" />
             </div>
           </motion.div>
         </div>

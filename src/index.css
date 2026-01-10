@@ -211,6 +211,20 @@
     @apply right-6;
   }
 
+  /* Scroll to Top Button */
+  .scroll-to-top-btn {
+    @apply fixed bottom-24 z-50 bg-primary text-primary-foreground p-3 rounded-full shadow-lg hover:bg-primary/90 transition-all duration-300;
+    box-shadow: var(--shadow-purple);
+  }
+
+  [dir="rtl"] .scroll-to-top-btn {
+    @apply left-6;
+  }
+
+  [dir="ltr"] .scroll-to-top-btn {
+    @apply right-6;
+  }
+
   /* Partner Logo Carousel */
   .partner-logo {
     @apply h-12 md:h-16 w-auto opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0;

@@ -68,9 +68,10 @@ const PortfolioSection = () => {
             spaceBetween={24}
             slidesPerView={1}
             navigation
-            loop
+            loop={portfolioItems.length > 3}
             autoplay={{ delay: 4000, disableOnInteraction: false }}
             dir={isRTL ? 'rtl' : 'ltr'}
+            key={isRTL ? 'rtl' : 'ltr'}
             breakpoints={{
               640: { slidesPerView: 2 },
               1024: { slidesPerView: 3 },

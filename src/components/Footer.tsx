@@ -35,6 +35,15 @@ const Footer = () => {
     { slug: 'paid-ads-optimization' },
   ];
 
+  const scrollToSection = (hash: string) => {
+    setTimeout(() => {
+      const element = document.querySelector(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
   const handleNavClick = (hash: string) => {
     if (!hash) {
       // Home link
@@ -42,17 +51,16 @@ const Footer = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         navigate(`/${language}`);
+        setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
       }
       return;
     }
 
     if (isHomePage) {
-      const element = document.querySelector(hash);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      scrollToSection(hash);
     } else {
-      navigate(`/${language}${hash}`);
+      navigate(`/${language}`);
+      scrollToSection(hash);
     }
   };
 
@@ -62,7 +70,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* About */}
           <div className="space-y-6">
-            <Link to={`/${language}`}>
+            <Link to={`/${language}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <img src={logoWhite} alt="Pure Marketing" className="h-10 w-auto" />
             </Link>
             <p className="text-background/80 leading-relaxed">

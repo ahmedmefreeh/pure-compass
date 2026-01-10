@@ -68,9 +68,10 @@ const BlogSection = () => {
             spaceBetween={24}
             slidesPerView={1}
             navigation
-            loop
+            loop={blogPosts.length > 2}
             autoplay={{ delay: 5000, disableOnInteraction: false }}
             dir={isRTL ? 'rtl' : 'ltr'}
+            key={isRTL ? 'rtl' : 'ltr'}
             breakpoints={{
               640: { slidesPerView: 2 },
               1024: { slidesPerView: 3 },

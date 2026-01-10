@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { Send, MessageCircle, Phone, Shield } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const ContactSection = () => {
-  const { t } = useTranslation();
-  const { isRTL } = useLanguage();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+interface ConsultationPopupProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
+const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -39,71 +38,46 @@ const ContactSection = () => {
     `.trim();
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappNumber = '966500000000'; // Placeholder number
+    const whatsappNumber = '966500000000';
     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+    onClose();
   };
 
   return (
-    <section id="contact" ref={ref} className="section-padding bg-muted/30">
-      <div className="container-custom">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          {/* Left Column - Contact Info */}
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
           <motion.div
-            initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-foreground/60 backdrop-blur-sm z-[100]"
+          />
+          
+          {/* Modal */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 bg-background rounded-2xl shadow-2xl z-[101] overflow-auto max-h-[90vh] md:max-w-lg md:w-full"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
-              {t('closing.title')}
-            </h2>
-            <p className="text-lg sm:text-xl text-muted-foreground">
-              {t('closing.subtitle')}
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <a
-                href="https://wa.me/966500000000"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1"
-              >
-                <Button size="lg" className="w-full gap-2">
-                  <MessageCircle className="w-5 h-5" />
-                  {t('common.contactUs')}
-                </Button>
-              </a>
-              <a
-                href="tel:+966500000000"
-                className="flex-1"
-              >
-                <Button size="lg" variant="outline" className="w-full gap-2">
-                  <Phone className="w-5 h-5" />
-                  {t('common.bookConsultation')}
-                </Button>
-              </a>
-            </div>
-
-            <div className="flex items-start gap-4 p-4 sm:p-6 rounded-xl bg-background border border-border">
-              <Shield className="w-8 h-8 sm:w-10 sm:h-10 text-primary flex-shrink-0" />
-              <div>
-                <p className="text-foreground leading-relaxed text-sm sm:text-base">
-                  {t('closing.licensed')}
-                </p>
+            <div className="p-6 md:p-8">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold">{t('common.bookConsultation')}</h2>
+                <button
+                  onClick={onClose}
+                  className="p-2 rounded-full hover:bg-muted transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
               </div>
-            </div>
-          </motion.div>
 
-          {/* Right Column - Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: isRTL ? -50 : 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="bg-background rounded-2xl p-5 sm:p-6 md:p-8 shadow-lg border border-border">
-              <h3 className="text-xl sm:text-2xl font-bold mb-5 sm:mb-6">{t('contact.title')}</h3>
-              
-              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label className="form-label">{t('contact.name')}</label>
                   <input
@@ -128,7 +102,7 @@ const ContactSection = () => {
 
                 <div>
                   <label className="form-label">{t('contact.preferredContact')}</label>
-                  <div className="flex flex-wrap gap-4">
+                  <div className="flex gap-4">
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
                         type="radio"
@@ -138,7 +112,7 @@ const ContactSection = () => {
                         onChange={(e) => setFormData({ ...formData, contactMethod: e.target.value })}
                         className="w-4 h-4 text-primary"
                       />
-                      <span className="text-sm sm:text-base">{t('contact.whatsapp')}</span>
+                      <span>{t('contact.whatsapp')}</span>
                     </label>
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
@@ -149,7 +123,7 @@ const ContactSection = () => {
                         onChange={(e) => setFormData({ ...formData, contactMethod: e.target.value })}
                         className="w-4 h-4 text-primary"
                       />
-                      <span className="text-sm sm:text-base">{t('contact.phoneCall')}</span>
+                      <span>{t('contact.phoneCall')}</span>
                     </label>
                   </div>
                 </div>
@@ -174,7 +148,7 @@ const ContactSection = () => {
                 <div>
                   <label className="form-label">{t('contact.details')}</label>
                   <textarea
-                    className="form-input min-h-[100px] sm:min-h-[120px]"
+                    className="form-input min-h-[100px]"
                     placeholder={t('contact.detailsPlaceholder')}
                     value={formData.details}
                     onChange={(e) => setFormData({ ...formData, details: e.target.value })}
@@ -188,10 +162,10 @@ const ContactSection = () => {
               </form>
             </div>
           </motion.div>
-        </div>
-      </div>
-    </section>
+        </>
+      )}
+    </AnimatePresence>
   );
 };
 
-export default ContactSection;
+export default ConsultationPopup;
