@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Menu, X, ChevronDown, Globe } from 'lucide-react';
@@ -11,17 +11,33 @@ const Header = () => {
   const { t } = useTranslation();
   const { language, setLanguage, isRTL } = useLanguage();
   const location = useLocation();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
 
   const navItems = [
-    { key: 'home', path: `/${language}` },
+    { key: 'home', path: `/${language}`, hash: '' },
     { key: 'services', path: `/${language}/services`, hasDropdown: true },
-    { key: 'about', path: `/${language}/about` },
-    { key: 'portfolio', path: `/${language}/portfolio` },
-    { key: 'blog', path: `/${language}/blog` },
-    { key: 'contact', path: `/${language}/contact` },
+    { key: 'about', path: `/${language}`, hash: '#about' },
+    { key: 'portfolio', path: `/${language}`, hash: '#portfolio' },
+    { key: 'blog', path: `/${language}`, hash: '#blog' },
+    { key: 'contact', path: `/${language}`, hash: '#contact' },
   ];
+
+  const handleNavClick = (item: typeof navItems[0]) => {
+    if (item.hash) {
+      if (location.pathname === `/${language}` || location.pathname === `/${language}/`) {
+        // Already on home page, just scroll
+        const element = document.querySelector(item.hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        // Navigate to home with hash
+        navigate(`/${language}${item.hash}`);
+      }
+    }
+  };
 
   const services = [
     { key: 'socialMedia', slug: 'social-media-management' },
@@ -79,6 +95,13 @@ const Header = () => {
                       )}
                     </AnimatePresence>
                   </div>
+                ) : item.hash ? (
+                  <button
+                    onClick={() => handleNavClick(item)}
+                    className="text-foreground hover:text-primary transition-colors font-medium"
+                  >
+                    {t(`nav.${item.key}`)}
+                  </button>
                 ) : (
                   <Link
                     to={item.path}
@@ -152,6 +175,16 @@ const Header = () => {
                           </div>
                         )}
                       </div>
+                    ) : item.hash ? (
+                      <button
+                        onClick={() => {
+                          handleNavClick(item);
+                          setIsMenuOpen(false);
+                        }}
+                        className="block w-full text-start px-4 py-3 text-foreground hover:bg-muted rounded-lg"
+                      >
+                        {t(`nav.${item.key}`)}
+                      </button>
                     ) : (
                       <Link
                         to={item.path}

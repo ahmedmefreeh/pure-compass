@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Phone, Mail, MapPin, Instagram, Twitter, Linkedin } from 'lucide-react';
@@ -7,24 +7,49 @@ import logoWhite from '@/assets/logo-white.png';
 const Footer = () => {
   const { t } = useTranslation();
   const { language } = useLanguage();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const quickLinks = [
-    { key: 'home', path: `/${language}` },
-    { key: 'about', path: `/${language}/about` },
-    { key: 'services', path: `/${language}/services` },
-    { key: 'portfolio', path: `/${language}/portfolio` },
+    { key: 'home', path: `/${language}`, hash: '' },
+    { key: 'about', path: `/${language}`, hash: '#about' },
+    { key: 'services', path: `/${language}`, hash: '#services' },
+    { key: 'portfolio', path: `/${language}`, hash: '#portfolio' },
+    { key: 'blog', path: `/${language}`, hash: '#blog' },
+    { key: 'contact', path: `/${language}`, hash: '#contact' },
   ];
 
   const services = [
+    { key: 'socialMedia', slug: 'social-media-management' },
     { key: 'paidAds', slug: 'paid-ads-campaigns' },
     { key: 'websites', slug: 'websites-ecommerce' },
     { key: 'motionGraphics', slug: 'video-editing-motion-graphics' },
   ];
 
+  const blogPosts = [
+    { slug: 'digital-marketing-trends-2025' },
+    { slug: 'social-media-strategy-guide' },
+    { slug: 'ecommerce-success-tips' },
+    { slug: 'paid-ads-optimization' },
+  ];
+
+  const handleNavClick = (item: { path: string; hash: string }) => {
+    if (item.hash) {
+      if (location.pathname === `/${language}` || location.pathname === `/${language}/`) {
+        const element = document.querySelector(item.hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        navigate(`/${language}${item.hash}`);
+      }
+    }
+  };
+
   return (
     <footer className="bg-foreground text-background">
       <div className="container-custom section-padding">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* About */}
           <div className="space-y-6">
             <Link to={`/${language}`}>
@@ -67,12 +92,21 @@ const Footer = () => {
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.key}>
-                  <Link
-                    to={link.path}
-                    className="text-background/80 hover:text-primary transition-colors"
-                  >
-                    {t(`nav.${link.key}`)}
-                  </Link>
+                  {link.hash ? (
+                    <button
+                      onClick={() => handleNavClick(link)}
+                      className="text-background/80 hover:text-primary transition-colors"
+                    >
+                      {t(`nav.${link.key}`)}
+                    </button>
+                  ) : (
+                    <Link
+                      to={link.path}
+                      className="text-background/80 hover:text-primary transition-colors"
+                    >
+                      {t(`nav.${link.key}`)}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -95,23 +129,39 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact & Blog */}
+          {/* Blog */}
           <div>
             <h4 className="text-lg font-bold mb-6">{t('footer.blog')}</h4>
-            <p className="text-background/80 mb-6">{t('footer.blogText')}</p>
-            <div className="space-y-3">
+            <ul className="space-y-3">
+              {blogPosts.map((post) => (
+                <li key={post.slug}>
+                  <Link
+                    to={`/${language}/blog/${post.slug}`}
+                    className="text-background/80 hover:text-primary transition-colors text-sm"
+                  >
+                    {t(`blogSection.posts.${post.slug}.title`)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h4 className="text-lg font-bold mb-6">{t('footer.contactInfo')}</h4>
+            <div className="space-y-4">
               <a
                 href="tel:+966500000000"
                 className="flex items-center gap-3 text-background/80 hover:text-primary transition-colors"
               >
-                <Phone className="w-4 h-4" />
+                <Phone className="w-4 h-4 flex-shrink-0" />
                 <span>+966 50 000 0000</span>
               </a>
               <a
                 href="mailto:info@puremarketing.sa"
                 className="flex items-center gap-3 text-background/80 hover:text-primary transition-colors"
               >
-                <Mail className="w-4 h-4" />
+                <Mail className="w-4 h-4 flex-shrink-0" />
                 <span>info@puremarketing.sa</span>
               </a>
               <div className="flex items-center gap-3 text-background/80">

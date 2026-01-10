@@ -44,6 +44,77 @@
     "client": "Client: Medical Center - Kingdom of Saudi Arabia",
     "cta": "Discover the Success Story"
   },
+  "about": {
+    "title": "About Pure Marketing",
+    "subtitle": "A Saudi company aiming to empower brands through smart strategies and innovative digital solutions.",
+    "description": "At Pure Marketing, we believe that every brand has a unique story to tell. Our mission is to help you tell that story in the most compelling way possible, reaching the right audience at the right time.",
+    "description2": "With years of experience in the Saudi and Gulf markets, we understand the local culture and consumer behavior, allowing us to create strategies that truly resonate with your target audience.",
+    "features": {
+      "mission": {
+        "title": "Our Mission",
+        "description": "Empowering brands to achieve digital dominance"
+      },
+      "team": {
+        "title": "Expert Team",
+        "description": "Skilled professionals with diverse expertise"
+      },
+      "excellence": {
+        "title": "Excellence",
+        "description": "Committed to delivering exceptional results"
+      },
+      "growth": {
+        "title": "Growth Focus",
+        "description": "Strategies designed for sustainable growth"
+      }
+    }
+  },
+  "portfolio": {
+    "title": "Our Portfolio",
+    "subtitle": "Don't just hear our story - see how we've brought our partners' brands to life with creative excellence.",
+    "viewAll": "View All Portfolio",
+    "items": {
+      "project1": {
+        "title": "Brand Social Presence",
+        "description": "Complete social media transformation for a retail brand"
+      },
+      "project2": {
+        "title": "Campaign Success",
+        "description": "High-ROI advertising campaign for healthcare sector"
+      },
+      "project3": {
+        "title": "Motion Graphics Showcase",
+        "description": "Cinematic brand video for product launch"
+      },
+      "project4": {
+        "title": "E-commerce Platform",
+        "description": "Full-featured online store with seamless UX"
+      }
+    }
+  },
+  "blogSection": {
+    "title": "Pure Blog",
+    "subtitle": "Stay updated with the latest digital marketing trends and insights from the Saudi market.",
+    "viewAll": "View All Articles",
+    "minRead": "min read",
+    "posts": {
+      "digital-marketing-trends-2025": {
+        "title": "Digital Marketing Trends 2025",
+        "excerpt": "Discover the top digital marketing trends shaping the Saudi market in 2025."
+      },
+      "social-media-strategy-guide": {
+        "title": "Social Media Strategy Guide",
+        "excerpt": "A comprehensive guide to building an effective social media strategy."
+      },
+      "ecommerce-success-tips": {
+        "title": "E-commerce Success Tips",
+        "excerpt": "Essential tips for building a successful e-commerce business in Saudi Arabia."
+      },
+      "paid-ads-optimization": {
+        "title": "Paid Ads Optimization",
+        "excerpt": "How to optimize your paid advertising campaigns for maximum ROI."
+      }
+    }
+  },
   "services": {
     "title": "Our Digital Solutions",
     "subtitle": "Integrated services designed to empower your brand to dominate the market",
@@ -126,6 +197,7 @@
     "aboutText": "A Saudi company aiming to empower brands through smart strategies and innovative digital solutions.",
     "blog": "Pure Blog",
     "blogText": "Subscribe to receive the latest digital marketing trends in the Saudi market.",
+    "contactInfo": "Contact Info",
     "copyright": "© 2025 Pure Marketing. All Rights Reserved."
   },
   "servicePages": {
