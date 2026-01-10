@@ -62,7 +62,7 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed top-4 bottom-4 left-4 right-4 md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:bottom-auto md:right-auto md:w-full md:max-w-lg md:max-h-[85vh] bg-background rounded-2xl shadow-2xl z-[101] flex flex-col"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-lg max-h-[calc(100vh-2rem)] bg-background rounded-2xl shadow-2xl z-[101] flex flex-col"
           >
             <div className="p-5 sm:p-6 md:p-8 overflow-y-auto flex-1">
               {/* Header */}

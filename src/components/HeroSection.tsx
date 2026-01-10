@@ -21,7 +21,7 @@ const HeroSection = () => {
   const { language } = useLanguage();
 
   return (
-    <section className="hero-section relative overflow-hidden min-h-[90vh] flex items-center">
+    <section className="hero-section relative overflow-hidden h-screen min-h-[600px] flex items-center">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
