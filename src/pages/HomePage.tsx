@@ -17,7 +17,7 @@ import TestimonialsSection from '@/components/TestimonialsSection';
 import BlogSection from '@/components/BlogSection';
 import ContactSection from '@/components/ContactSection';
 import WhatsAppButton from '@/components/WhatsAppButton';
-import { useScrollToTop } from '@/hooks/useScrollToTop';
+import ScrollToTopButton from '@/components/ScrollToTopButton';
 
 const HomePage = () => {
   const { t } = useTranslation();
@@ -82,6 +82,7 @@ const HomePage = () => {
 
       <Footer />
       <WhatsAppButton />
+      <ScrollToTopButton />
     </>
   );
 };

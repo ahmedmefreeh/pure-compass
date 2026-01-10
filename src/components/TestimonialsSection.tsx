@@ -10,7 +10,7 @@ import 'swiper/css/pagination';
 
 const TestimonialsSection = () => {
   const { t } = useTranslation();
-  const { isRTL } = useLanguage();
+  const { language, isRTL } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -39,6 +39,7 @@ const TestimonialsSection = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <Swiper
+            key={language}
             modules={[Autoplay, Pagination]}
             spaceBetween={24}
             slidesPerView={1}

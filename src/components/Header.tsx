@@ -15,6 +15,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
 
@@ -25,6 +26,18 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
 
   const navItems = [
     { key: 'home', path: `/${language}`, hash: '' },
@@ -133,9 +146,12 @@ const Header = () => {
                       onMouseEnter={() => setIsServicesOpen(true)}
                       onMouseLeave={() => setIsServicesOpen(false)}
                     >
-                      <span className="text-foreground hover:text-primary transition-colors font-medium">
+                      <button
+                        onClick={() => handleNavClick(item)}
+                        className="text-foreground hover:text-primary transition-colors font-medium"
+                      >
                         {t(`nav.${item.key}`)}
-                      </span>
+                      </button>
                       <ChevronDown className="w-4 h-4" />
                       
                       <AnimatePresence>
@@ -144,7 +160,7 @@ const Header = () => {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
-                            className="absolute top-full left-0 mt-2 w-64 bg-card rounded-xl shadow-lg border border-border overflow-hidden"
+                            className="absolute top-full start-0 mt-2 w-64 bg-card rounded-xl shadow-lg border border-border overflow-hidden z-50"
                           >
                             {services.map((service) => (
                               <Link
@@ -224,108 +240,145 @@ const Header = () => {
             </button>
           </div>
 
-          {/* Mobile Menu */}
-          <AnimatePresence>
-            {isMenuOpen && (
-              <motion.div
-                variants={menuVariants}
-                initial="closed"
-                animate="open"
-                exit="closed"
-                className="lg:hidden border-t border-border overflow-hidden"
-              >
-                <nav className="py-4 space-y-2">
-                  {navItems.map((item, index) => (
-                    <motion.div 
-                      key={item.key}
-                      custom={index}
-                      variants={menuItemVariants}
-                      initial="closed"
-                      animate="open"
-                    >
-                      {item.hasDropdown ? (
-                        <div>
+        </div>
+      </header>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 lg:hidden"
+          >
+            {/* Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-black/50"
+              onClick={() => setIsMenuOpen(false)}
+            />
+            
+            {/* Menu Panel */}
+            <motion.div
+              initial={{ x: isRTL ? '-100%' : '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: isRTL ? '-100%' : '100%' }}
+              transition={{ type: 'tween', duration: 0.3 }}
+              className="absolute top-0 end-0 h-full w-80 max-w-[85vw] bg-background shadow-xl"
+            >
+              <div className="flex items-center justify-between p-4 border-b border-border">
+                <Link to={`/${language}`} onClick={() => setIsMenuOpen(false)}>
+                  <img src={logoDark} alt="Pure Marketing" className="h-8 w-auto" />
+                </Link>
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-2 hover:bg-muted rounded-lg"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+              
+              <nav className="p-4 space-y-2 overflow-y-auto max-h-[calc(100vh-80px)]">
+                {navItems.map((item, index) => (
+                  <motion.div 
+                    key={item.key}
+                    initial={{ opacity: 0, x: isRTL ? -20 : 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    {item.hasDropdown ? (
+                      <div>
+                        <div className="flex items-center">
                           <button
-                            onClick={() => setIsServicesOpen(!isServicesOpen)}
-                            className="flex items-center justify-between w-full px-4 py-3 text-foreground hover:bg-muted rounded-lg"
+                            onClick={() => {
+                              handleNavClick(item, true);
+                            }}
+                            className="flex-1 text-start px-4 py-3 text-foreground hover:bg-muted rounded-lg"
                           >
-                            <span>{t(`nav.${item.key}`)}</span>
+                            {t(`nav.${item.key}`)}
+                          </button>
+                          <button
+                            onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                            className="p-3 hover:bg-muted rounded-lg"
+                          >
                             <motion.div
-                              animate={{ rotate: isServicesOpen ? 180 : 0 }}
+                              animate={{ rotate: isMobileServicesOpen ? 180 : 0 }}
                               transition={{ duration: 0.2 }}
                             >
                               <ChevronDown className="w-4 h-4" />
                             </motion.div>
                           </button>
-                          <AnimatePresence>
-                            {isServicesOpen && (
-                              <motion.div 
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                                exit={{ opacity: 0, height: 0 }}
-                                className="ps-8 space-y-1 overflow-hidden"
-                              >
-                                {services.map((service) => (
-                                  <Link
-                                    key={service.key}
-                                    to={`/${language}/services/${service.slug}`}
-                                    className="block px-4 py-2 text-muted-foreground hover:text-foreground"
-                                    onClick={() => setIsMenuOpen(false)}
-                                  >
-                                    {t(`services.${service.key}.title`)}
-                                  </Link>
-                                ))}
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
                         </div>
-                      ) : (
-                        <button
-                          onClick={() => handleNavClick(item, true)}
-                          className="block w-full text-start px-4 py-3 text-foreground hover:bg-muted rounded-lg"
-                        >
-                          {t(`nav.${item.key}`)}
-                        </button>
-                      )}
-                    </motion.div>
-                  ))}
-                  <motion.div 
-                    custom={navItems.length}
-                    variants={menuItemVariants}
-                    initial="closed"
-                    animate="open"
-                    className="flex flex-col gap-4 px-4 pt-4 border-t border-border"
-                  >
-                    <button
-                      onClick={toggleLanguage}
-                      className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors"
-                    >
-                      <Globe className="w-4 h-4" />
-                      <span className="text-sm font-medium">{language === 'ar' ? 'EN' : 'عربي'}</span>
-                    </button>
-                    <Button 
-                      variant="outline"
-                      onClick={() => {
-                        handleNavClick({ key: 'contact', path: `/${language}`, hash: '#contact' }, true);
-                      }}
-                    >
-                      {t('common.contactUs')}
-                    </Button>
-                    <Button 
-                      onClick={() => {
-                        setIsMenuOpen(false);
-                        setIsConsultationOpen(true);
-                      }}
-                    >
-                      {t('common.bookConsultation')}
-                    </Button>
+                        <AnimatePresence>
+                          {isMobileServicesOpen && (
+                            <motion.div 
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              className="ps-8 space-y-1 overflow-hidden"
+                            >
+                              {services.map((service) => (
+                                <Link
+                                  key={service.key}
+                                  to={`/${language}/services/${service.slug}`}
+                                  className="block px-4 py-2 text-muted-foreground hover:text-foreground"
+                                  onClick={() => setIsMenuOpen(false)}
+                                >
+                                  {t(`services.${service.key}.title`)}
+                                </Link>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => handleNavClick(item, true)}
+                        className="block w-full text-start px-4 py-3 text-foreground hover:bg-muted rounded-lg"
+                      >
+                        {t(`nav.${item.key}`)}
+                      </button>
+                    )}
                   </motion.div>
-                </nav>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </header>
+                ))}
+                <motion.div 
+                  initial={{ opacity: 0, x: isRTL ? -20 : 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: navItems.length * 0.05 }}
+                  className="flex flex-col gap-4 pt-4 border-t border-border"
+                >
+                  <button
+                    onClick={toggleLanguage}
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors"
+                  >
+                    <Globe className="w-4 h-4" />
+                    <span className="text-sm font-medium">{language === 'ar' ? 'EN' : 'عربي'}</span>
+                  </button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => {
+                      handleNavClick({ key: 'contact', path: `/${language}`, hash: '#contact' }, true);
+                    }}
+                  >
+                    {t('common.contactUs')}
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      setIsConsultationOpen(true);
+                    }}
+                  >
+                    {t('common.bookConsultation')}
+                  </Button>
+                </motion.div>
+              </nav>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       
       <ConsultationPopup 
         isOpen={isConsultationOpen} 
