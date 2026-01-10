@@ -37,7 +37,7 @@ const BlogPage = () => {
 
       <Header />
 
-      <main>
+      <main className="pt-20">
         {/* Hero Section */}
         <section className="hero-section py-20 lg:py-32">
           <div className="container-custom">

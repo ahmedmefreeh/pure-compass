@@ -40,7 +40,7 @@ const CaseStudyPage = () => {
 
       <Header />
       
-      <main>
+      <main className="pt-20">
         {/* Hero Section */}
         <section className="hero-section section-padding">
           <div className="container-custom">

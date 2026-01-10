@@ -8,11 +8,22 @@ const resources = {
   ar: { translation: ar },
 };
 
+// Get initial language from URL path
+const getInitialLanguageFromURL = (): string => {
+  if (typeof window !== 'undefined') {
+    const pathLang = window.location.pathname.split('/')[1];
+    if (pathLang === 'en' || pathLang === 'ar') {
+      return pathLang;
+    }
+  }
+  return 'ar'; // default to Arabic
+};
+
 i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'ar', // default language
+    lng: getInitialLanguageFromURL(),
     fallbackLng: 'ar',
     interpolation: {
       escapeValue: false,

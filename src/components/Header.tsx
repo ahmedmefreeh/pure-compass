@@ -123,11 +123,12 @@ const Header = () => {
   return (
     <>
       <header 
-        className={`sticky top-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-background/95 backdrop-blur-md shadow-md' 
+            ? 'bg-background/95 backdrop-blur-md shadow-lg' 
             : 'bg-background border-b border-border'
         }`}
+        style={{ boxShadow: isScrolled ? '0 4px 20px -5px rgba(0,0,0,0.15)' : 'none' }}
       >
         <div className="container-custom">
           <div className="flex items-center justify-between h-20">

@@ -66,7 +66,7 @@ const PortfolioPage = () => {
 
       <Header />
       
-      <main>
+      <main className="pt-20">
         {/* Hero */}
         <section className="hero-section py-20 md:py-28">
           <div className="container-custom text-center">
