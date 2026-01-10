@@ -62,7 +62,7 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] max-w-lg max-h-[calc(100vh-2rem)] bg-background rounded-2xl shadow-2xl z-[101] flex flex-col"
+            className="fixed top-[50%] left-[50%] !-translate-x-[50%] !-translate-y-[50%]  w-[calc(100%-2rem)] max-w-lg max-h-[calc(100vh-2rem)] bg-background rounded-2xl shadow-2xl z-[101] flex flex-col"
           >
             <div className="p-5 sm:p-6 md:p-8 overflow-y-auto flex-1">
               {/* Header */}
@@ -85,7 +85,7 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                     className="form-input"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
+                    required 
                   />
                 </div>
 

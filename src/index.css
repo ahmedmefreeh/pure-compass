@@ -1,9 +1,9 @@
+/* 29LT Bukra Font Import */
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* 29LT Bukra Font Import */
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
 
 /* Pure Marketing Design System */
 @layer base {
@@ -50,8 +50,16 @@
     --pure-gray-light: 0 0% 96%;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(250 40% 43%) 0%, hsl(250 40% 35%) 100%);
-    --gradient-cta: linear-gradient(135deg, hsl(250 40% 50%) 0%, hsl(250 40% 40%) 100%);
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(250 40% 43%) 0%,
+      hsl(250 40% 35%) 100%
+    );
+    --gradient-cta: linear-gradient(
+      135deg,
+      hsl(250 40% 50%) 0%,
+      hsl(250 40% 40%) 100%
+    );
 
     /* Shadows */
     --shadow-sm: 0 2px 8px -2px hsl(0 0% 0% / 0.08);
@@ -113,28 +121,62 @@
 @layer base {
   * {
     @apply border-border;
+    /* 1. Webkit Browsers (Chrome, Edge, Safari) */
+    ::-webkit-scrollbar {
+      width: 11px; /* Width of the vertical scrollbar */
+      height: 10px; /* Height of the horizontal scrollbar */
+    }
+
+    ::-webkit-scrollbar-track {
+      background: hsl(var(--muted)); /* Light grey background */
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: hsl(
+        var(--primary) / 0.6
+      ); /* Brand purple with some transparency */
+      border-radius: 10px; /* Rounded corners */
+      border: 2px solid hsl(var(--muted)); /* Creates padding effect around the thumb */
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: hsl(var(--primary)); /* Full brand purple on hover */
+    }
+
+    /* 2. Firefox */
+    html {
+      /* "thumb color" "track color" */
+      scrollbar-color: hsl(var(--primary) / 0.6) hsl(var(--muted));
+      scrollbar-width: thin; /* Options: auto, thin, none */
+    }
   }
 
   html {
     scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+    overflow-y: scroll;
     overflow-x: hidden;
   }
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    overflow-x: hidden;
   }
 
   /* RTL Support */
   [dir="rtl"] {
-    font-family: 'Cairo', sans-serif;
+    font-family: "Cairo", sans-serif;
   }
 
   [dir="ltr"] {
-    font-family: 'Cairo', sans-serif;
+    font-family: "Cairo", sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-bold tracking-tight;
   }
 }
@@ -304,7 +346,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .portfolio-swiper .swiper-button-next::after,
