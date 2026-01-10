@@ -2,13 +2,14 @@ import { useParams, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, ArrowLeft, CheckCircle, MessageCircle, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { Helmet } from 'react-helmet-async';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 
 const serviceKeys: Record<string, string> = {
   'social-media-management': 'socialMedia',
@@ -21,6 +22,8 @@ const ServicePage = () => {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useTranslation();
   const { language, isRTL } = useLanguage();
+  const navigate = useNavigate();
+  useScrollToTop();
 
   const serviceKey = slug ? serviceKeys[slug] : null;
 
@@ -29,6 +32,10 @@ const ServicePage = () => {
   }
 
   const steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
+
+  const handleContactClick = () => {
+    navigate(`/${language}#contact`);
+  };
 
   return (
     <>
@@ -180,10 +187,10 @@ const ServicePage = () => {
                 <MessageCircle className="w-5 h-5" />
                 {t('common.contactUs')}
               </a>
-              <Link to={`/${language}/contact`} className="btn-hero-secondary">
+              <button onClick={handleContactClick} className="btn-hero-secondary">
                 <Phone className="w-5 h-5" />
                 {t('common.bookConsultation')}
-              </Link>
+              </button>
             </motion.div>
           </div>
         </section>

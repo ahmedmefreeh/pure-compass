@@ -10,13 +10,15 @@ const Footer = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const isHomePage = location.pathname === `/${language}` || location.pathname === `/${language}/`;
+
   const quickLinks = [
-    { key: 'home', path: `/${language}`, hash: '' },
-    { key: 'about', path: `/${language}`, hash: '#about' },
-    { key: 'services', path: `/${language}`, hash: '#services' },
-    { key: 'portfolio', path: `/${language}`, hash: '#portfolio' },
-    { key: 'blog', path: `/${language}`, hash: '#blog' },
-    { key: 'contact', path: `/${language}`, hash: '#contact' },
+    { key: 'home', hash: '' },
+    { key: 'about', hash: '#about' },
+    { key: 'services', hash: '#services' },
+    { key: 'portfolio', hash: '#portfolio' },
+    { key: 'blog', hash: '#blog' },
+    { key: 'contact', hash: '#contact' },
   ];
 
   const services = [
@@ -33,16 +35,24 @@ const Footer = () => {
     { slug: 'paid-ads-optimization' },
   ];
 
-  const handleNavClick = (item: { path: string; hash: string }) => {
-    if (item.hash) {
-      if (location.pathname === `/${language}` || location.pathname === `/${language}/`) {
-        const element = document.querySelector(item.hash);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
+  const handleNavClick = (hash: string) => {
+    if (!hash) {
+      // Home link
+      if (isHomePage) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
-        navigate(`/${language}${item.hash}`);
+        navigate(`/${language}`);
       }
+      return;
+    }
+
+    if (isHomePage) {
+      const element = document.querySelector(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      navigate(`/${language}${hash}`);
     }
   };
 
@@ -92,21 +102,12 @@ const Footer = () => {
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.key}>
-                  {link.hash ? (
-                    <button
-                      onClick={() => handleNavClick(link)}
-                      className="text-background/80 hover:text-primary transition-colors"
-                    >
-                      {t(`nav.${link.key}`)}
-                    </button>
-                  ) : (
-                    <Link
-                      to={link.path}
-                      className="text-background/80 hover:text-primary transition-colors"
-                    >
-                      {t(`nav.${link.key}`)}
-                    </Link>
-                  )}
+                  <button
+                    onClick={() => handleNavClick(link.hash)}
+                    className="text-background/80 hover:text-primary transition-colors"
+                  >
+                    {t(`nav.${link.key}`)}
+                  </button>
                 </li>
               ))}
             </ul>

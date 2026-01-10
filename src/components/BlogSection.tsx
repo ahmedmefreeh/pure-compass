@@ -2,8 +2,12 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { ArrowRight, ArrowLeft, Calendar, Clock } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 const BlogSection = () => {
   const { t } = useTranslation();
@@ -13,27 +17,29 @@ const BlogSection = () => {
     {
       slug: 'digital-marketing-trends-2025',
       image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=600&h=400&fit=crop',
-      date: '2025-01-10',
-      readTime: '5',
+      readTime: 5,
     },
     {
       slug: 'social-media-strategy-guide',
       image: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=600&h=400&fit=crop',
-      date: '2025-01-08',
-      readTime: '7',
+      readTime: 8,
     },
     {
       slug: 'ecommerce-success-tips',
       image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop',
-      date: '2025-01-05',
-      readTime: '6',
+      readTime: 6,
+    },
+    {
+      slug: 'paid-ads-optimization',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+      readTime: 7,
     },
   ];
 
   const ArrowIcon = isRTL ? ArrowLeft : ArrowRight;
 
   return (
-    <section id="blog" className="section-padding bg-background">
+    <section id="blog" className="section-padding overflow-hidden">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -50,46 +56,57 @@ const BlogSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {blogPosts.map((post, index) => (
-            <motion.article
-              key={post.slug}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="group bg-card rounded-2xl overflow-hidden border border-border hover:border-primary/30 transition-colors"
-            >
-              <Link to={`/${language}/blog/${post.slug}`}>
-                <div className="aspect-[16/10] overflow-hidden">
-                  <img
-                    src={post.image}
-                    alt={t(`blogSection.posts.${post.slug}.title`)}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      {post.date}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      {post.readTime} {t('blogSection.minRead')}
-                    </span>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-12"
+        >
+          <Swiper
+            modules={[Autoplay, Navigation]}
+            spaceBetween={24}
+            slidesPerView={1}
+            navigation
+            loop
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            dir={isRTL ? 'rtl' : 'ltr'}
+            breakpoints={{
+              640: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+            className="blog-swiper"
+          >
+            {blogPosts.map((post) => (
+              <SwiperSlide key={post.slug}>
+                <Link
+                  to={`/${language}/blog/${post.slug}`}
+                  className="group block bg-card rounded-2xl overflow-hidden border border-border hover:shadow-lg transition-shadow duration-300"
+                >
+                  <div className="aspect-[16/10] overflow-hidden">
+                    <img
+                      src={post.image}
+                      alt={t(`blogSection.posts.${post.slug}.title`)}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
                   </div>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                    {t(`blogSection.posts.${post.slug}.title`)}
-                  </h3>
-                  <p className="text-muted-foreground line-clamp-2">
-                    {t(`blogSection.posts.${post.slug}.excerpt`)}
-                  </p>
-                </div>
-              </Link>
-            </motion.article>
-          ))}
-        </div>
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+                      <Clock className="w-4 h-4" />
+                      <span>{post.readTime} {t('blogSection.minRead')}</span>
+                    </div>
+                    <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                      {t(`blogSection.posts.${post.slug}.title`)}
+                    </h3>
+                    <p className="text-muted-foreground line-clamp-2">
+                      {t(`blogSection.posts.${post.slug}.excerpt`)}
+                    </p>
+                  </div>
+                </Link>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

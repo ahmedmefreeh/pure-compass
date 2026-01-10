@@ -117,10 +117,12 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    overflow-x: hidden;
   }
 
   /* RTL Support */
@@ -272,5 +274,46 @@
   /* Counter animation */
   .counter-animate {
     @apply tabular-nums;
+  }
+}
+
+/* Swiper custom styles */
+.portfolio-swiper .swiper-button-next,
+.portfolio-swiper .swiper-button-prev,
+.blog-swiper .swiper-button-next,
+.blog-swiper .swiper-button-prev {
+  color: hsl(var(--primary));
+  background: hsl(var(--background));
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.portfolio-swiper .swiper-button-next::after,
+.portfolio-swiper .swiper-button-prev::after,
+.blog-swiper .swiper-button-next::after,
+.blog-swiper .swiper-button-prev::after {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+[dir="rtl"] .swiper-button-next {
+  left: 10px;
+  right: auto;
+}
+
+[dir="rtl"] .swiper-button-prev {
+  right: 10px;
+  left: auto;
+}
+
+/* Hide swiper buttons on mobile */
+@media (max-width: 640px) {
+  .portfolio-swiper .swiper-button-next,
+  .portfolio-swiper .swiper-button-prev,
+  .blog-swiper .swiper-button-next,
+  .blog-swiper .swiper-button-prev {
+    display: none;
   }
 }

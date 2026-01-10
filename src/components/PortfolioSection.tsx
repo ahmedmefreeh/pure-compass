@@ -2,8 +2,12 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { ArrowRight, ArrowLeft, ExternalLink } from 'lucide-react';
+import { ArrowRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 const PortfolioSection = () => {
   const { t } = useTranslation();
@@ -35,7 +39,7 @@ const PortfolioSection = () => {
   const ArrowIcon = isRTL ? ArrowLeft : ArrowRight;
 
   return (
-    <section id="portfolio" className="section-padding bg-muted/30">
+    <section id="portfolio" className="section-padding bg-muted/30 overflow-hidden">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -52,39 +56,56 @@ const PortfolioSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {portfolioItems.map((item, index) => (
-            <motion.div
-              key={item.key}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="group relative overflow-hidden rounded-2xl bg-card"
-            >
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={item.image}
-                  alt={t(`portfolio.items.${item.key}.title`)}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <span className="inline-block px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full mb-2">
-                    {t(`services.${item.category}.title`)}
-                  </span>
-                  <h3 className="text-lg font-bold text-background mb-1">
-                    {t(`portfolio.items.${item.key}.title`)}
-                  </h3>
-                  <p className="text-sm text-background/80">
-                    {t(`portfolio.items.${item.key}.description`)}
-                  </p>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-12"
+        >
+          <Swiper
+            modules={[Autoplay, Navigation]}
+            spaceBetween={24}
+            slidesPerView={1}
+            navigation
+            loop
+            autoplay={{ delay: 4000, disableOnInteraction: false }}
+            dir={isRTL ? 'rtl' : 'ltr'}
+            breakpoints={{
+              640: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+              1280: { slidesPerView: 4 },
+            }}
+            className="portfolio-swiper"
+          >
+            {portfolioItems.map((item) => (
+              <SwiperSlide key={item.key}>
+                <div className="group relative overflow-hidden rounded-2xl bg-card">
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={t(`portfolio.items.${item.key}.title`)}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <span className="inline-block px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full mb-2">
+                        {t(`services.${item.category}.title`)}
+                      </span>
+                      <h3 className="text-lg font-bold text-background mb-1">
+                        {t(`portfolio.items.${item.key}.title`)}
+                      </h3>
+                      <p className="text-sm text-background/80">
+                        {t(`portfolio.items.${item.key}.description`)}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

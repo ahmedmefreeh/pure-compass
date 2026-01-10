@@ -7,12 +7,14 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { Helmet } from 'react-helmet-async';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 
 // This is a template - blog posts would come from a CMS or JSON file
 const BlogPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useTranslation();
   const { language, isRTL } = useLanguage();
+  useScrollToTop();
 
   // Placeholder blog post data
   const blogPost = {

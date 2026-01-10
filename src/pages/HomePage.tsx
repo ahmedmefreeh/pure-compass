@@ -17,11 +17,19 @@ import TestimonialsSection from '@/components/TestimonialsSection';
 import BlogSection from '@/components/BlogSection';
 import ContactSection from '@/components/ContactSection';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 
 const HomePage = () => {
   const { t } = useTranslation();
   const { language, isRTL } = useLanguage();
   const location = useLocation();
+
+  // Handle scroll to top when navigating without hash
+  useEffect(() => {
+    if (!location.hash) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, [location.pathname]);
 
   // Handle hash navigation
   useEffect(() => {

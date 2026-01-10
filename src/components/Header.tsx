@@ -17,16 +17,32 @@ const Header = () => {
 
   const navItems = [
     { key: 'home', path: `/${language}`, hash: '' },
-    { key: 'services', path: `/${language}/services`, hasDropdown: true },
+    { key: 'services', path: `/${language}`, hash: '#services', hasDropdown: true },
     { key: 'about', path: `/${language}`, hash: '#about' },
     { key: 'portfolio', path: `/${language}`, hash: '#portfolio' },
     { key: 'blog', path: `/${language}`, hash: '#blog' },
     { key: 'contact', path: `/${language}`, hash: '#contact' },
   ];
 
-  const handleNavClick = (item: typeof navItems[0]) => {
+  const isHomePage = location.pathname === `/${language}` || location.pathname === `/${language}/`;
+
+  const handleNavClick = (item: typeof navItems[0], closeMenu = false) => {
+    if (closeMenu) {
+      setIsMenuOpen(false);
+    }
+    
+    // For home link without hash
+    if (item.key === 'home' && !item.hash) {
+      if (isHomePage) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate(`/${language}`);
+      }
+      return;
+    }
+
     if (item.hash) {
-      if (location.pathname === `/${language}` || location.pathname === `/${language}/`) {
+      if (isHomePage) {
         // Already on home page, just scroll
         const element = document.querySelector(item.hash);
         if (element) {
@@ -95,22 +111,15 @@ const Header = () => {
                       )}
                     </AnimatePresence>
                   </div>
-                ) : item.hash ? (
+                ) : (
                   <button
                     onClick={() => handleNavClick(item)}
-                    className="text-foreground hover:text-primary transition-colors font-medium"
-                  >
-                    {t(`nav.${item.key}`)}
-                  </button>
-                ) : (
-                  <Link
-                    to={item.path}
                     className={`text-foreground hover:text-primary transition-colors font-medium ${
-                      location.pathname === item.path ? 'text-primary' : ''
+                      item.key === 'home' && isHomePage ? 'text-primary' : ''
                     }`}
                   >
                     {t(`nav.${item.key}`)}
-                  </Link>
+                  </button>
                 )}
               </div>
             ))}
@@ -125,8 +134,8 @@ const Header = () => {
               <Globe className="w-4 h-4" />
               <span className="text-sm font-medium">{language === 'ar' ? 'EN' : 'عربي'}</span>
             </button>
-            <Button asChild>
-              <Link to={`/${language}/contact`}>{t('common.contactUs')}</Link>
+            <Button onClick={() => handleNavClick({ key: 'contact', path: `/${language}`, hash: '#contact' })}>
+              {t('common.contactUs')}
             </Button>
           </div>
 
@@ -175,24 +184,13 @@ const Header = () => {
                           </div>
                         )}
                       </div>
-                    ) : item.hash ? (
+                    ) : (
                       <button
-                        onClick={() => {
-                          handleNavClick(item);
-                          setIsMenuOpen(false);
-                        }}
+                        onClick={() => handleNavClick(item, true)}
                         className="block w-full text-start px-4 py-3 text-foreground hover:bg-muted rounded-lg"
                       >
                         {t(`nav.${item.key}`)}
                       </button>
-                    ) : (
-                      <Link
-                        to={item.path}
-                        className="block px-4 py-3 text-foreground hover:bg-muted rounded-lg"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {t(`nav.${item.key}`)}
-                      </Link>
                     )}
                   </div>
                 ))}
@@ -204,10 +202,11 @@ const Header = () => {
                     <Globe className="w-4 h-4" />
                     <span className="text-sm font-medium">{language === 'ar' ? 'EN' : 'عربي'}</span>
                   </button>
-                  <Button asChild className="flex-1">
-                    <Link to={`/${language}/contact`} onClick={() => setIsMenuOpen(false)}>
-                      {t('common.contactUs')}
-                    </Link>
+                  <Button 
+                    className="flex-1"
+                    onClick={() => handleNavClick({ key: 'contact', path: `/${language}`, hash: '#contact' }, true)}
+                  >
+                    {t('common.contactUs')}
                   </Button>
                 </div>
               </nav>
