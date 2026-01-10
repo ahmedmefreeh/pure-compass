@@ -3,12 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Phone, Mail, MapPin, Instagram, Twitter, Linkedin } from 'lucide-react';
 import logo from '@/assets/logo.png';
+import logoDark from '@/assets/logo-dark.png';
+import { useTheme } from 'next-themes';
 
 const Footer = () => {
   const { t } = useTranslation();
   const { language } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
+  const { resolvedTheme } = useTheme();
 
   const isHomePage = location.pathname === `/${language}` || location.pathname === `/${language}/`;
 
@@ -71,7 +74,7 @@ const Footer = () => {
           {/* About */}
           <div className="space-y-6">
             <Link to={`/${language}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <img src={logo} alt="Pure Marketing" className="h-10 w-auto invert" />
+              <img src={resolvedTheme === 'dark' ? logo : logoDark} alt="Pure Marketing" className="h-10 w-auto" />
             </Link>
             <p className="text-background/80 leading-relaxed">
               {t('footer.aboutText')}

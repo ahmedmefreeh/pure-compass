@@ -6,12 +6,15 @@ import { Menu, X, ChevronDown, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '@/assets/logo.png';
+import logoDark from '@/assets/logo-dark.png';
 import ConsultationPopup from './ConsultationPopup';
 import ThemeToggle from './ThemeToggle';
+import { useTheme } from 'next-themes';
 
 const Header = () => {
   const { t } = useTranslation();
   const { language, setLanguage, isRTL } = useLanguage();
+  const { resolvedTheme } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -154,7 +157,7 @@ const Header = () => {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link to={`/${language}`} className="flex items-center" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <img src={logo} alt="Pure Marketing" className="h-10 w-auto dark:invert" />
+              <img src={resolvedTheme === 'dark' ? logoDark : logo} alt="Pure Marketing" className="h-10 w-auto" />
             </Link>
 
             {/* Desktop Navigation */}
@@ -296,7 +299,7 @@ const Header = () => {
             >
               <div className="flex items-center justify-between p-4 border-b border-border">
                 <Link to={`/${language}`} onClick={() => setIsMenuOpen(false)}>
-                  <img src={logo} alt="Pure Marketing" className="h-8 w-auto dark:invert" />
+                  <img src={resolvedTheme === 'dark' ? logoDark : logo} alt="Pure Marketing" className="h-8 w-auto" />
                 </Link>
                 <button
                   onClick={() => setIsMenuOpen(false)}
