@@ -35,7 +35,7 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section ref={ref} className="section-padding bg-background">
+    <section id="services" ref={ref} className="section-padding bg-background">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
