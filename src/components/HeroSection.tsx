@@ -38,7 +38,7 @@ const HeroSection = () => {
       </div>
 
       <div className="container-custom relative z-10 py-20 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Text Content */}
           <div className="text-center lg:text-start">
             <motion.h1
@@ -95,13 +95,13 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="hidden lg:flex items-center justify-center"
+            className="flex items-center justify-center"
           >
             {animationData && (
               <Lottie 
                 animationData={animationData} 
                 loop={false}
-                className="w-full max-w-lg"
+                className="w-full max-w-xs sm:max-w-sm lg:max-w-lg"
               />
             )}
           </motion.div>
