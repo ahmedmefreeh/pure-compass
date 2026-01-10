@@ -10,7 +10,7 @@ const HeroSection = () => {
   const { language } = useLanguage();
 
   return (
-    <section className="hero-section relative overflow-hidden min-h-[90vh] flex items-center">
+    <section id="hero" className="hero-section relative overflow-hidden min-h-[90vh] flex items-center">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full blur-3xl" />

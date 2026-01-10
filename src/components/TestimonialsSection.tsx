@@ -11,7 +11,7 @@ const TestimonialsSection = () => {
   const testimonials = ['testimonial1', 'testimonial2', 'testimonial3'];
 
   return (
-    <section ref={ref} className="section-padding bg-background">
+    <section id="testimonials" ref={ref} className="section-padding bg-background">
       <div className="container-custom">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

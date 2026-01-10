@@ -15,12 +15,12 @@ const Header = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
 
   const navItems = [
-    { key: 'home', path: `/${language}` },
-    { key: 'services', path: `/${language}/services`, hasDropdown: true },
-    { key: 'about', path: `/${language}/about` },
-    { key: 'portfolio', path: `/${language}/portfolio` },
-    { key: 'blog', path: `/${language}/blog` },
-    { key: 'contact', path: `/${language}/contact` },
+    { key: 'home', path: `/${language}`, section: 'hero' },
+    { key: 'services', path: `/${language}`, hasDropdown: true, section: 'services' },
+    { key: 'about', path: `/${language}`, section: 'why-us' },
+    { key: 'portfolio', path: `/${language}`, section: 'case-study' },
+    { key: 'blog', path: `/${language}`, section: 'testimonials' },
+    { key: 'contact', path: `/${language}`, section: 'contact' },
   ];
 
   const services = [
@@ -80,14 +80,19 @@ const Header = () => {
                     </AnimatePresence>
                   </div>
                 ) : (
-                  <Link
-                    to={item.path}
-                    className={`text-foreground hover:text-primary transition-colors font-medium ${
-                      location.pathname === item.path ? 'text-primary' : ''
-                    }`}
+                  <button
+                    onClick={() => {
+                      const element = document.getElementById(item.section || '');
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      } else if (location.pathname !== `/${language}`) {
+                        window.location.href = `/${language}#${item.section}`;
+                      }
+                    }}
+                    className="text-foreground hover:text-primary transition-colors font-medium"
                   >
                     {t(`nav.${item.key}`)}
-                  </Link>
+                  </button>
                 )}
               </div>
             ))}
@@ -153,13 +158,20 @@ const Header = () => {
                         )}
                       </div>
                     ) : (
-                      <Link
-                        to={item.path}
-                        className="block px-4 py-3 text-foreground hover:bg-muted rounded-lg"
-                        onClick={() => setIsMenuOpen(false)}
+                      <button
+                        className="block w-full text-start px-4 py-3 text-foreground hover:bg-muted rounded-lg"
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          const element = document.getElementById(item.section || '');
+                          if (element) {
+                            element.scrollIntoView({ behavior: 'smooth' });
+                          } else if (location.pathname !== `/${language}`) {
+                            window.location.href = `/${language}#${item.section}`;
+                          }
+                        }}
                       >
                         {t(`nav.${item.key}`)}
-                      </Link>
+                      </button>
                     )}
                   </div>
                 ))}
