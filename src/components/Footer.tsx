@@ -74,7 +74,7 @@ const Footer = () => {
           {/* About */}
           <div className="space-y-6">
             <Link to={`/${language}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <img src={resolvedTheme === 'dark' ? logo : logoDark} alt="Pure Marketing" className="h-10 w-auto" />
+              <img src={logoDark} alt="Pure Marketing" className="h-10 w-auto" />
             </Link>
             <p className="text-background/80 leading-relaxed">
               {t('footer.aboutText')}
