@@ -1,21 +1,28 @@
-import { useParams, Navigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, ArrowLeft, CheckCircle, MessageCircle, Phone } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import WhatsAppButton from '@/components/WhatsAppButton';
-import { Helmet } from 'react-helmet-async';
-import { useScrollToTop } from '@/hooks/useScrollToTop';
+import { useParams, Navigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  ArrowRight,
+  ArrowLeft,
+  CheckCircle,
+  MessageCircle,
+  Phone,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import BackButton from "@/components/BackButton";
+import { Helmet } from "react-helmet-async";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
 
 const serviceKeys: Record<string, string> = {
-  'social-media-management': 'socialMedia',
-  'paid-ads-campaigns': 'paidAds',
-  'video-editing-motion-graphics': 'motionGraphics',
-  'websites-ecommerce': 'websites',
+  "social-media-management": "socialMedia",
+  "paid-ads-campaigns": "paidAds",
+  "video-editing-motion-graphics": "motionGraphics",
+  "websites-ecommerce": "websites",
 };
 
 const ServicePage = () => {
@@ -31,7 +38,7 @@ const ServicePage = () => {
     return <Navigate to={`/${language}`} replace />;
   }
 
-  const steps = ['step1', 'step2', 'step3', 'step4', 'step5'];
+  const steps = ["step1", "step2", "step3", "step4", "step5"];
 
   const handleContactClick = () => {
     navigate(`/${language}#contact`);
@@ -41,14 +48,22 @@ const ServicePage = () => {
     <>
       <Helmet>
         <title>{t(`servicePages.${serviceKey}.title`)} | Pure Marketing</title>
-        <meta name="description" content={t(`servicePages.${serviceKey}.description`)} />
-        <link rel="canonical" href={`https://puremarketing.sa/${language}/services/${slug}`} />
-        <html lang={language} dir={isRTL ? 'rtl' : 'ltr'} />
+        <meta
+          name="description"
+          content={t(`servicePages.${serviceKey}.description`)}
+        />
+        <link
+          rel="canonical"
+          href={`https://puremarketing.sa/${language}/services/${slug}`}
+        />
+        <html lang={language} dir={isRTL ? "rtl" : "ltr"} />
       </Helmet>
 
       <Header />
 
-      <main className="pt-20">
+      <BackButton />
+
+      <main>
         {/* Hero Section */}
         <section className="hero-section py-20 lg:py-32">
           <div className="container-custom">
@@ -57,16 +72,14 @@ const ServicePage = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
-              >
+                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
                 {t(`servicePages.${serviceKey}.title`)}
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-xl md:text-2xl text-primary-foreground/90"
-              >
+                className="text-xl md:text-2xl text-primary-foreground/90">
                 {t(`servicePages.${serviceKey}.heroSubtitle`)}
               </motion.p>
             </div>
@@ -82,8 +95,7 @@ const ServicePage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="prose prose-lg max-w-none"
-              >
+                className="prose prose-lg max-w-none">
                 <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
                   {t(`servicePages.${serviceKey}.description`)}
                 </p>
@@ -95,15 +107,16 @@ const ServicePage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="mt-12 p-12 bg-muted/50 rounded-2xl border-2 border-dashed border-border text-center"
-              >
+                className="mt-12 p-12 bg-muted/50 rounded-2xl border-2 border-dashed border-border text-center">
                 <p className="text-muted-foreground">
-                  {language === 'ar' 
-                    ? 'لا تكتفِ بسماع قصتنا، بل شاهد أعمالنا المميزة في هذا المجال'
+                  {language === "ar"
+                    ? "لا تكتفِ بسماع قصتنا، بل شاهد أعمالنا المميزة في هذا المجال"
                     : "Don't just hear our story, see our outstanding work in this field"}
                 </p>
                 <p className="text-sm text-muted-foreground mt-2">
-                  {language === 'ar' ? '(سيتم إضافة الأعمال قريباً)' : '(Portfolio coming soon)'}
+                  {language === "ar"
+                    ? "(سيتم إضافة الأعمال قريباً)"
+                    : "(Portfolio coming soon)"}
                 </p>
               </motion.div>
             </div>
@@ -118,8 +131,7 @@ const ServicePage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-3xl md:text-4xl font-bold text-center mb-16"
-            >
+              className="text-3xl md:text-4xl font-bold text-center mb-16">
               {t(`servicePages.${serviceKey}.methodology.title`)}
             </motion.h2>
 
@@ -131,17 +143,20 @@ const ServicePage = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="flex gap-6 items-start"
-                >
+                  className="flex gap-6 items-start">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-lg">
                     {index + 1}
                   </div>
                   <div className="flex-1 bg-background rounded-xl p-6 shadow-sm border border-border">
                     <h3 className="text-xl font-bold mb-2">
-                      {t(`servicePages.${serviceKey}.methodology.${step}.title`)}
+                      {t(
+                        `servicePages.${serviceKey}.methodology.${step}.title`
+                      )}
                     </h3>
                     <p className="text-muted-foreground">
-                      {t(`servicePages.${serviceKey}.methodology.${step}.description`)}
+                      {t(
+                        `servicePages.${serviceKey}.methodology.${step}.description`
+                      )}
                     </p>
                   </div>
                 </motion.div>
@@ -158,38 +173,36 @@ const ServicePage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-3xl md:text-4xl font-bold mb-6"
-            >
-              {t('closing.title')}
+              className="text-3xl md:text-4xl font-bold mb-6">
+              {t("closing.title")}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-xl text-primary-foreground/90 mb-8"
-            >
-              {t('closing.subtitle')}
+              className="text-xl text-primary-foreground/90 mb-8">
+              {t("closing.subtitle")}
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
+              className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href="https://wa.me/966500000000"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-hero-primary"
-              >
+                className="btn-hero-primary">
                 <MessageCircle className="w-5 h-5" />
-                {t('common.contactUs')}
+                {t("common.contactUs")}
               </a>
-              <button onClick={handleContactClick} className="btn-hero-secondary">
+              <button
+                onClick={handleContactClick}
+                className="btn-hero-secondary">
                 <Phone className="w-5 h-5" />
-                {t('common.bookConsultation')}
+                {t("common.bookConsultation")}
               </button>
             </motion.div>
           </div>

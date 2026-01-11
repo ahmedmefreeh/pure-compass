@@ -1,21 +1,21 @@
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { MessageCircle, Phone } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
-import Lottie from 'lottie-react';
-import { useEffect, useState } from 'react';
-import heroBg from '@/assets/hero-bg.jpg';
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { MessageCircle, Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import Lottie from "lottie-react";
+import { useEffect, useState } from "react";
+import heroBg from "@/assets/banner1920x1080.jpg";
 
 const HeroSection = () => {
   const [animationData, setAnimationData] = useState<object | null>(null);
 
   useEffect(() => {
-    fetch('/lottie/business-animation.json')
-      .then(res => res.json())
-      .then(data => setAnimationData(data))
-      .catch(err => console.error('Failed to load Lottie animation:', err));
+    fetch("/lottie/business-animation.json")
+      .then((res) => res.json())
+      .then((data) => setAnimationData(data))
+      .catch((err) => console.error("Failed to load Lottie animation:", err));
   }, []);
   const { t } = useTranslation();
   const { language } = useLanguage();
@@ -23,13 +23,13 @@ const HeroSection = () => {
   return (
     <section className="hero-section relative overflow-hidden h-[calc(100vh-5rem)] min-h-[600px] flex items-center">
       {/* Background Image */}
-      {/* <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      /> */}
+      <div 
+        className="absolute inset-0 bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${heroBg})`, backgroundPositionY:'-60px' }}
+      />
 
       {/* Overlay for better text readability */}
-      {/* <div className="absolute inset-0 bg-primary/60" /> */}
+      <div className="absolute inset-0 bg-primary/50" />
 
       {/* Background Pattern */}
       {/* <div className="absolute inset-0 opacity-10">
@@ -38,9 +38,9 @@ const HeroSection = () => {
       </div> */}
 
       <div className="container-custom relative z-10 py-20 lg:py-32">
-        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-1 gap-8 lg:gap-12 items-center">
           {/* Text Content */}
-          <div className="text-center lg:text-start">
+          <div className="max-w-4xl text-center lg:text-center justify-center items-center flex flex-col">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -71,7 +71,7 @@ const HeroSection = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               {/* Lottie Animation Mobile*/}
-              <motion.div
+              {/* <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -83,7 +83,7 @@ const HeroSection = () => {
                     className="min-w-full max-w-xs sm:max-w-sm lg:max-w-lg"
                   />
                 )}
-              </motion.div>
+              </motion.div> */}
               <a
                 href="https://wa.me/966500000000"
                 target="_blank"
@@ -100,7 +100,7 @@ const HeroSection = () => {
           </div>
 
           {/* Lottie Animation Desktop*/}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -112,7 +112,7 @@ const HeroSection = () => {
                 className="min-w-full max-w-xs sm:max-w-sm lg:max-w-lg"
               />
             )}
-          </motion.div>
+          </motion.div> */}
         </div>
       </div>
 

@@ -153,9 +153,8 @@
 
   html {
     scroll-behavior: smooth;
-    scrollbar-gutter: stable;
-    overflow-y: scroll;
-    overflow-x: hidden;
+scrollbar-gutter: stable;
+overflow-x: hidden;
   }
 
   body {

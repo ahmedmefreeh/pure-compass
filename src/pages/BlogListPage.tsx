@@ -1,13 +1,14 @@
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
-import { Clock } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import WhatsAppButton from '@/components/WhatsAppButton';
-import { useScrollToTop } from '@/hooks/useScrollToTop';
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
+import { Clock } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import BackButton from "@/components/BackButton";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
 
 const BlogListPage = () => {
   const { t } = useTranslation();
@@ -16,52 +17,61 @@ const BlogListPage = () => {
 
   const blogPosts = [
     {
-      slug: 'digital-marketing-trends-2025',
-      image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&h=500&fit=crop',
+      slug: "digital-marketing-trends-2025",
+      image:
+        "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&h=500&fit=crop",
       readTime: 5,
-      date: '2025-01-05',
+      date: "2025-01-05",
     },
     {
-      slug: 'social-media-strategy-guide',
-      image: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&h=500&fit=crop',
+      slug: "social-media-strategy-guide",
+      image:
+        "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&h=500&fit=crop",
       readTime: 8,
-      date: '2025-01-02',
+      date: "2025-01-02",
     },
     {
-      slug: 'ecommerce-success-tips',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=500&fit=crop',
+      slug: "ecommerce-success-tips",
+      image:
+        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=500&fit=crop",
       readTime: 6,
-      date: '2024-12-28',
+      date: "2024-12-28",
     },
     {
-      slug: 'paid-ads-optimization',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop',
+      slug: "paid-ads-optimization",
+      image:
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop",
       readTime: 7,
-      date: '2024-12-20',
+      date: "2024-12-20",
     },
   ];
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
-    return date.toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+    return date.toLocaleDateString(language === "ar" ? "ar-SA" : "en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
   return (
     <>
       <Helmet>
-        <title>{t('blogSection.title')} | Pure Marketing</title>
-        <meta name="description" content={t('blogSection.subtitle')} />
-        <link rel="canonical" href={`https://puremarketing.sa/${language}/blog`} />
-        <html lang={language} dir={isRTL ? 'rtl' : 'ltr'} />
+        <title>{t("blogSection.title")} | Pure Marketing</title>
+        <meta name="description" content={t("blogSection.subtitle")} />
+        <link
+          rel="canonical"
+          href={`https://puremarketing.sa/${language}/blog`}
+        />
+        <html lang={language} dir={isRTL ? "rtl" : "ltr"} />
       </Helmet>
 
       <Header />
-      
-      <main className="pt-20">
+
+      <BackButton />
+
+      <main>
         {/* Hero */}
         <section className="hero-section py-20 md:py-28">
           <div className="container-custom text-center">
@@ -69,17 +79,15 @@ const BlogListPage = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
-            >
-              {t('blogSection.title')}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+              {t("blogSection.title")}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-xl text-primary-foreground/90 max-w-3xl mx-auto"
-            >
-              {t('blogSection.subtitle')}
+              className="text-xl text-primary-foreground/90 max-w-3xl mx-auto">
+              {t("blogSection.subtitle")}
             </motion.p>
           </div>
         </section>
@@ -94,12 +102,10 @@ const BlogListPage = () => {
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                >
+                  transition={{ duration: 0.4, delay: index * 0.1 }}>
                   <Link
                     to={`/${language}/blog/${post.slug}`}
-                    className="group block bg-card rounded-2xl overflow-hidden border border-border hover:shadow-lg transition-shadow duration-300"
-                  >
+                    className="group block bg-card rounded-2xl overflow-hidden border border-border hover:shadow-lg transition-shadow duration-300">
                     <div className="aspect-[16/10] overflow-hidden">
                       <img
                         src={post.image}
@@ -112,7 +118,7 @@ const BlogListPage = () => {
                         <span>{formatDate(post.date)}</span>
                         <span className="flex items-center gap-1">
                           <Clock className="w-4 h-4" />
-                          {post.readTime} {t('blogSection.minRead')}
+                          {post.readTime} {t("blogSection.minRead")}
                         </span>
                       </div>
                       <h2 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">

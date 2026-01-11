@@ -66,7 +66,7 @@ const HomePage = () => {
 
       <Header />
       
-      <main className="pt-20">
+      <main className="">
         <HeroSection />
         <StatsSection />
         <PartnersCarousel />

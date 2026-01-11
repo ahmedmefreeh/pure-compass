@@ -54,11 +54,11 @@ const Header = () => {
   useEffect(() => {
     if (isMenuOpen) {
       // 1. Calculate the width of the scrollbar
-      const scrollbarWidth =
-        window.innerWidth - document.documentElement.clientWidth;
+      // const scrollbarWidth =
+      //   window.innerWidth - document.documentElement.clientWidth;
 
       // 2. Add that width as padding so content doesn't shift
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
+      // document.body.style.paddingRight = `${scrollbarWidth}px`;
 
       // 3. Lock scrolling
       document.body.style.overflow = "hidden";
@@ -168,7 +168,7 @@ const Header = () => {
   return (
     <>
       <header
-        className={`rounded-b-sm fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
+        className={`rounded-b-sm sticky  top-0 left-0 w-full z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-background/95 backdrop-blur-md shadow-lg"
             : "bg-background border-b border-border"

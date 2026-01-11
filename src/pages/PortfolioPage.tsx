@@ -1,11 +1,12 @@
-import { useTranslation } from 'react-i18next';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import WhatsAppButton from '@/components/WhatsAppButton';
-import { useScrollToTop } from '@/hooks/useScrollToTop';
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import BackButton from "@/components/BackButton";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
 
 const PortfolioPage = () => {
   const { t } = useTranslation();
@@ -14,59 +15,72 @@ const PortfolioPage = () => {
 
   const portfolioItems = [
     {
-      key: 'project1',
-      category: 'socialMedia',
-      image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=600&fit=crop',
+      key: "project1",
+      category: "socialMedia",
+      image:
+        "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=600&fit=crop",
     },
     {
-      key: 'project2',
-      category: 'paidAds',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
+      key: "project2",
+      category: "paidAds",
+      image:
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
     },
     {
-      key: 'project3',
-      category: 'motionGraphics',
-      image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&h=600&fit=crop',
+      key: "project3",
+      category: "motionGraphics",
+      image:
+        "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&h=600&fit=crop",
     },
     {
-      key: 'project4',
-      category: 'websites',
-      image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&h=600&fit=crop',
+      key: "project4",
+      category: "websites",
+      image:
+        "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&h=600&fit=crop",
     },
     {
-      key: 'project1',
-      category: 'socialMedia',
-      image: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&h=600&fit=crop',
+      key: "project1",
+      category: "socialMedia",
+      image:
+        "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&h=600&fit=crop",
     },
     {
-      key: 'project2',
-      category: 'paidAds',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
+      key: "project2",
+      category: "paidAds",
+      image:
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
     },
     {
-      key: 'project3',
-      category: 'motionGraphics',
-      image: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?w=800&h=600&fit=crop',
+      key: "project3",
+      category: "motionGraphics",
+      image:
+        "https://images.unsplash.com/photo-1536240478700-b869070f9279?w=800&h=600&fit=crop",
     },
     {
-      key: 'project4',
-      category: 'websites',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
+      key: "project4",
+      category: "websites",
+      image:
+        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
     },
   ];
 
   return (
     <>
       <Helmet>
-        <title>{t('portfolio.title')} | Pure Marketing</title>
-        <meta name="description" content={t('portfolio.subtitle')} />
-        <link rel="canonical" href={`https://puremarketing.sa/${language}/portfolio`} />
-        <html lang={language} dir={isRTL ? 'rtl' : 'ltr'} />
+        <title>{t("portfolio.title")} | Pure Marketing</title>
+        <meta name="description" content={t("portfolio.subtitle")} />
+        <link
+          rel="canonical"
+          href={`https://puremarketing.sa/${language}/portfolio`}
+        />
+        <html lang={language} dir={isRTL ? "rtl" : "ltr"} />
       </Helmet>
 
       <Header />
-      
-      <main className="pt-20">
+
+      <BackButton />
+
+      <main>
         {/* Hero */}
         <section className="hero-section py-20 md:py-28">
           <div className="container-custom text-center">
@@ -74,17 +88,15 @@ const PortfolioPage = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
-            >
-              {t('portfolio.title')}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+              {t("portfolio.title")}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-xl text-primary-foreground/90 max-w-3xl mx-auto"
-            >
-              {t('portfolio.subtitle')}
+              className="text-xl text-primary-foreground/90 max-w-3xl mx-auto">
+              {t("portfolio.subtitle")}
             </motion.p>
           </div>
         </section>
@@ -100,8 +112,7 @@ const PortfolioPage = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className="group relative overflow-hidden rounded-2xl bg-card"
-                >
+                  className="group relative overflow-hidden rounded-2xl bg-card">
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
                       src={item.image}
