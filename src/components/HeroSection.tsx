@@ -6,7 +6,9 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
-import heroBg from "@/assets/banner1920x1080.jpg";
+// import heroBg from "@/assets/banner1920x1080.jpg";
+import hero2 from "@/assets/hero2.png";
+import hero3 from '@/assets/pureWeb.png'
 
 const HeroSection = () => {
   const [animationData, setAnimationData] = useState<object | null>(null);
@@ -23,9 +25,9 @@ const HeroSection = () => {
   return (
     <section className="hero-section relative overflow-hidden h-[calc(100vh-5rem)] min-h-[600px] flex items-center">
       {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroBg})`, backgroundPositionY:'-60px' }}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${hero3})` }}
       />
 
       {/* Overlay for better text readability */}
@@ -37,7 +39,7 @@ const HeroSection = () => {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-white rounded-full blur-3xl" />
       </div> */}
 
-      <div className="container-custom relative z-10 py-20 lg:py-32">
+      <div className="container-custom relative z-10 py-20 lg:py-32 max-w-[50rem]">
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-1 gap-8 lg:gap-12 items-center">
           {/* Text Content */}
           <div className="max-w-4xl text-center lg:text-center justify-center items-center flex flex-col">
@@ -45,33 +47,47 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-[2rem] md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              {t("hero.title")}
+              className="text-7xl md:text-8xl lg:text-8xl font-bold leading-tight mb-6">
+              {t("hero.heading")}
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg md:text-xl lg:text-2xl text-primary-foreground/90 mb-4 leading-relaxed">
-              {t("hero.subtitle")}
+              className="text-lg md:text-3xl lg:text-3xl font-extrabold text-primary-foreground/90 mb-4 leading-relaxed">
+              {t("hero.subtitle1")}
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-[0.9rem] md:text-xl lg:text-xl text-primary-foreground/90 mb-4 leading-relaxed">
+              {t("hero.subtitle2")}
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-[0.9rem] md:text-xl lg:text-xl text-primary-foreground/90 mb-4 leading-relaxed">
+              {t("hero.subtitle3")}
             </motion.p>
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-xl md:text-2xl font-semibold mb-10">
+              className="text-[0.9rem] md:text-xl mb-10">
               {t("hero.cta")}
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              {/* Lottie Animation Mobile*/}
-              {/* <motion.div
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                {/* Lottie Animation Mobile*/}
+                {/* <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -84,19 +100,19 @@ const HeroSection = () => {
                   />
                 )}
               </motion.div> */}
-              <a
-                href="https://wa.me/966500000000"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-hero-primary">
-                <MessageCircle className="w-5 h-5" />
-                {t("hero.contactNow")}
-              </a>
-              <Link to={`tel:+966500000000`} className="btn-hero-secondary">
-                <Phone className="w-5 h-5" />
-                {t("hero.bookConsultation")}
-              </Link>
-            </motion.div>
+                <a
+                  href="https://wa.me/966500000000"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-hero-primary">
+                  <MessageCircle className="w-5 h-5" />
+                  {t("hero.contactNow")}
+                </a>
+                <Link to={`tel:+966500000000`} className="btn-hero-secondary">
+                  <Phone className="w-5 h-5" />
+                  {t("hero.bookConsultation")}
+                </Link>
+              </motion.div>
           </div>
 
           {/* Lottie Animation Desktop*/}

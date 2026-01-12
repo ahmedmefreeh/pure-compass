@@ -24,9 +24,12 @@
     "contact": "Contact"
   },
   "hero": {
-    "title": "Pure Marketing - Your Complete Destination for Digital Dominance",
-    "subtitle": "We are the compass that brings all your growth solutions to one station - from social media management and smart advertising campaigns, to building e-commerce stores and creating visual and cinematic content.",
-    "cta": "We lead your brand towards sustainable growth that never stops",
+    "heading": "Pure Marketing",
+    "title": "Pure Marketing: Your Integrated Destination for Digital Sovereignty",
+    "subtitle1": "The Onion That Connects Your Marketing Paths in One Stop",
+    "subtitle2": "From Social Media Management and Smart Advertising Campaigns to Building",
+    "subtitle3": "E-commerce and the Visual and Cinematic Content Industry",
+    "cta": "Leading Your Brand Towards Sustainable and Unstoppable Growth",
     "contactNow": "Contact Us Now",
     "bookConsultation": "Book Free Consultation"
   },

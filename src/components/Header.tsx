@@ -168,7 +168,7 @@ const Header = () => {
   return (
     <>
       <header
-        className={`rounded-b-sm sticky  top-0 left-0 w-full z-50 transition-all duration-300 ${
+        className={`rounded-b-sm sticky h-[5rem] top-0 left-0 w-full z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-background/95 backdrop-blur-md shadow-lg"
             : "bg-background border-b border-border"
@@ -203,7 +203,9 @@ const Header = () => {
                       </button>
                       <ChevronDown
                         onClick={() => setIsServicesOpen(!isServicesOpen)}
-                        className={`w-4 h-4 transform duration-200 ${isServicesOpen ? "rotate-180" : ""}`}
+                        className={`w-4 h-4 transform duration-200 ${
+                          isServicesOpen ? "rotate-180" : ""
+                        }`}
                       />
 
                       <AnimatePresence>
