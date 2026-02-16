@@ -1,36 +1,106 @@
 import { useParams, Navigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
 import { Calendar, User, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { Helmet } from 'react-helmet-async';
 import { useScrollToTop } from '@/hooks/useScrollToTop';
+import { getBlogPost } from '@/data/content';
+import { Button } from '@/components/ui/button';
 
-// This is a template - blog posts would come from a CMS or JSON file
 const BlogPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const { t } = useTranslation();
   const { language, isRTL } = useLanguage();
   useScrollToTop();
 
-  // Placeholder blog post data
-  const blogPost = {
-    title: language === 'ar' ? 'عنوان المقالة' : 'Blog Post Title',
-    date: '2025-01-10',
-    author: language === 'ar' ? 'فريق بيور ماركتنج' : 'Pure Marketing Team',
-    content: language === 'ar' 
-      ? 'محتوى المقالة سيتم إضافته هنا...'
-      : 'Blog post content will be added here...',
+  const post = getBlogPost(slug || '');
+
+  if (!post) {
+    return <Navigate to={`/${language}`} replace />;
+  }
+
+  const lang = language as 'ar' | 'en';
+  const title = post.title[lang] || post.title.ar;
+  const content = post.content[lang] || post.content.ar;
+  const author = lang === 'ar' ? 'فريق بيور ماركتنج' : 'Pure Marketing Team';
+
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString(lang === 'ar' ? 'ar-SA' : 'en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
   };
+
+  // Simple markdown-like renderer
+  const renderContent = (text: string) => {
+    const blocks = text.split('\n\n');
+    return blocks.map((block, i) => {
+      const trimmed = block.trim();
+      if (!trimmed) return null;
+
+      // Headings
+      if (trimmed.startsWith('## ')) {
+        return (
+          <h2 key={i} className="text-2xl font-bold mt-10 mb-4">
+            {trimmed.replace('## ', '')}
+          </h2>
+        );
+      }
+
+      // Blockquote
+      if (trimmed.startsWith('> ')) {
+        return (
+          <blockquote key={i} className="border-s-4 border-primary ps-6 py-4 my-8 bg-primary/5 rounded-e-xl">
+            <p className="text-lg italic text-foreground/80">{trimmed.replace('> ', '').replace(/"/g, '"')}</p>
+          </blockquote>
+        );
+      }
+
+      // Horizontal rule
+      if (trimmed === '---') {
+        return <hr key={i} className="my-8 border-border" />;
+      }
+
+      // List items
+      if (trimmed.startsWith('- ') || trimmed.startsWith('1. ')) {
+        const items = trimmed.split('\n').filter(l => l.trim());
+        return (
+          <ul key={i} className="space-y-2 my-4">
+            {items.map((item, j) => (
+              <li key={j} className="flex items-start gap-2 text-muted-foreground">
+                <span className="text-primary mt-1">•</span>
+                <span dangerouslySetInnerHTML={{ __html: formatInline(item.replace(/^[-\d.]\s*/, '')) }} />
+              </li>
+            ))}
+          </ul>
+        );
+      }
+
+      // Paragraph
+      return (
+        <p key={i} className="text-muted-foreground leading-relaxed mb-4"
+           dangerouslySetInnerHTML={{ __html: formatInline(trimmed) }} />
+      );
+    });
+  };
+
+  const formatInline = (text: string): string => {
+    return text
+      .replace(/\*\*(.+?)\*\*/g, '<strong class="text-foreground font-semibold">$1</strong>');
+  };
+
+  const ArrowIcon = isRTL ? ArrowLeft : ArrowRight;
 
   return (
     <>
       <Helmet>
-        <title>{blogPost.title} | Pure Marketing</title>
-        <meta name="description" content={blogPost.content.substring(0, 160)} />
+        <title>{title} | Pure Marketing</title>
+        <meta name="description" content={post.excerpt[lang] || post.excerpt.ar} />
         <link rel="canonical" href={`https://puremarketing.sa/${language}/blog/${slug}`} />
         <html lang={language} dir={isRTL ? 'rtl' : 'ltr'} />
       </Helmet>
@@ -38,7 +108,7 @@ const BlogPage = () => {
       <Header />
 
       <main className="pt-20">
-        {/* Hero Section */}
+        {/* Hero */}
         <section className="hero-section py-20 lg:py-32">
           <div className="container-custom">
             <div className="max-w-4xl mx-auto text-center">
@@ -46,9 +116,9 @@ const BlogPage = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6"
               >
-                {blogPost.title}
+                {title}
               </motion.h1>
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -58,18 +128,18 @@ const BlogPage = () => {
               >
                 <span className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  {blogPost.date}
+                  {formatDate(post.date)}
                 </span>
                 <span className="flex items-center gap-2">
                   <User className="w-4 h-4" />
-                  {blogPost.author}
+                  {author}
                 </span>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Content Section */}
+        {/* Content */}
         <section className="section-padding bg-background">
           <div className="container-custom">
             <article className="max-w-3xl mx-auto">
@@ -78,19 +148,17 @@ const BlogPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="prose prose-lg max-w-none"
               >
-                <p className="text-lg leading-relaxed text-muted-foreground">
-                  {blogPost.content}
-                </p>
-                
-                {/* Placeholder for blog content */}
-                <div className="my-12 p-12 bg-muted/50 rounded-2xl border-2 border-dashed border-border text-center">
-                  <p className="text-muted-foreground">
-                    {language === 'ar' 
-                      ? 'محتوى المقالة سيتم إضافته هنا'
-                      : 'Blog post content will be added here'}
-                  </p>
+                {renderContent(content)}
+
+                {/* Back to blog */}
+                <div className="mt-12 pt-8 border-t border-border text-center">
+                  <Button asChild variant="outline" size="lg" className="gap-2">
+                    <Link to={`/${language}/blog`}>
+                      {isRTL ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
+                      {isRTL ? 'العودة للمدونة' : 'Back to Blog'}
+                    </Link>
+                  </Button>
                 </div>
               </motion.div>
             </article>
