@@ -8,33 +8,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { blogPosts } from '@/data/content';
 
 const BlogSection = () => {
   const { t } = useTranslation();
   const { language, isRTL } = useLanguage();
-
-  const blogPosts = [
-    {
-      slug: 'digital-marketing-trends-2025',
-      image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=600&h=400&fit=crop',
-      readTime: 5,
-    },
-    {
-      slug: 'social-media-strategy-guide',
-      image: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=600&h=400&fit=crop',
-      readTime: 8,
-    },
-    {
-      slug: 'ecommerce-success-tips',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop',
-      readTime: 6,
-    },
-    {
-      slug: 'paid-ads-optimization',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
-      readTime: 7,
-    },
-  ];
+  const lang = language as 'ar' | 'en';
 
   const ArrowIcon = isRTL ? ArrowLeft : ArrowRight;
 
@@ -87,7 +66,7 @@ const BlogSection = () => {
                   <div className="aspect-[16/10] overflow-hidden">
                     <img
                       src={post.image}
-                      alt={t(`blogSection.posts.${post.slug}.title`)}
+                      alt={post.title[lang] || post.title.ar}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
@@ -97,10 +76,10 @@ const BlogSection = () => {
                       <span>{post.readTime} {t('blogSection.minRead')}</span>
                     </div>
                     <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                      {t(`blogSection.posts.${post.slug}.title`)}
+                      {post.title[lang] || post.title.ar}
                     </h3>
                     <p className="text-muted-foreground line-clamp-2">
-                      {t(`blogSection.posts.${post.slug}.excerpt`)}
+                      {post.excerpt[lang] || post.excerpt.ar}
                     </p>
                   </div>
                 </Link>

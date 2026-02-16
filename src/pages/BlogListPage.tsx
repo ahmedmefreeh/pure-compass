@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Clock } from 'lucide-react';
@@ -8,42 +8,17 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { useScrollToTop } from '@/hooks/useScrollToTop';
+import { blogPosts } from '@/data/content';
 
 const BlogListPage = () => {
   const { t } = useTranslation();
   const { language, isRTL } = useLanguage();
   useScrollToTop();
-
-  const blogPosts = [
-    {
-      slug: 'digital-marketing-trends-2025',
-      image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&h=500&fit=crop',
-      readTime: 5,
-      date: '2025-01-05',
-    },
-    {
-      slug: 'social-media-strategy-guide',
-      image: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&h=500&fit=crop',
-      readTime: 8,
-      date: '2025-01-02',
-    },
-    {
-      slug: 'ecommerce-success-tips',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=500&fit=crop',
-      readTime: 6,
-      date: '2024-12-28',
-    },
-    {
-      slug: 'paid-ads-optimization',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop',
-      readTime: 7,
-      date: '2024-12-20',
-    },
-  ];
+  const lang = language as 'ar' | 'en';
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
-    return date.toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US', {
+    return date.toLocaleDateString(lang === 'ar' ? 'ar-SA' : 'en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -60,9 +35,8 @@ const BlogListPage = () => {
       </Helmet>
 
       <Header />
-      
+
       <main className="pt-20">
-        {/* Hero */}
         <section className="hero-section py-20 md:py-28">
           <div className="container-custom text-center">
             <motion.h1
@@ -84,7 +58,6 @@ const BlogListPage = () => {
           </div>
         </section>
 
-        {/* Blog Grid */}
         <section className="section-padding">
           <div className="container-custom">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -103,7 +76,7 @@ const BlogListPage = () => {
                     <div className="aspect-[16/10] overflow-hidden">
                       <img
                         src={post.image}
-                        alt={t(`blogSection.posts.${post.slug}.title`)}
+                        alt={post.title[lang] || post.title.ar}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
@@ -116,10 +89,10 @@ const BlogListPage = () => {
                         </span>
                       </div>
                       <h2 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
-                        {t(`blogSection.posts.${post.slug}.title`)}
+                        {post.title[lang] || post.title.ar}
                       </h2>
                       <p className="text-muted-foreground line-clamp-3">
-                        {t(`blogSection.posts.${post.slug}.excerpt`)}
+                        {post.excerpt[lang] || post.excerpt.ar}
                       </p>
                     </div>
                   </Link>
