@@ -43,7 +43,7 @@ const ContactSection = () => {
     `.trim();
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappNumber = "966500000000"; // Placeholder number
+    const whatsappNumber = "9660569522042";
     window.open(
       `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
       "_blank"
@@ -69,7 +69,7 @@ const ContactSection = () => {
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <a
-                href="https://wa.me/966500000000"
+                href="https://api.whatsapp.com/send?phone=9660569522042"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1">
@@ -78,7 +78,7 @@ const ContactSection = () => {
                   {t("common.contactUs")}
                 </Button>
               </a>
-              <a href="tel:+966500000000" className="flex-1">
+              <a href="tel:+966569522042" className="flex-1">
                 <Button size="lg" variant="outline" className="w-full gap-2">
                   <Phone className="w-5 h-5" />
                   {t("common.bookConsultation")}
