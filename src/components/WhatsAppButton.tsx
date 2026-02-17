@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const WhatsAppButton = () => {
   return (
     <motion.a
-      href="https://wa.me/966500000000"
+      href="https://api.whatsapp.com/send?phone=9660569522042"
       target="_blank"
       rel="noopener noreferrer"
       className="whatsapp-float"

@@ -1,17 +1,15 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Phone, Mail, MapPin, Instagram, Twitter, Linkedin } from 'lucide-react';
-import logo from '@/assets/logo.png';
+import { Phone, Mail, MapPin, Instagram, Twitter, Linkedin, Facebook, Youtube } from 'lucide-react';
 import logoDark from '@/assets/logo-dark.png';
-import { useTheme } from 'next-themes';
+import { SiTiktok, SiSnapchat } from 'react-icons/si';
 
 const Footer = () => {
   const { language, isRTL } = useLanguage();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
-  const { resolvedTheme } = useTheme();
 
   const isHomePage = location.pathname === `/${language}` || location.pathname === `/${language}/`;
 
@@ -38,6 +36,16 @@ const Footer = () => {
     { slug: 'paid-ads-optimization' },
   ];
 
+  const socialLinks = [
+    { href: 'https://instagram.com/puremarketingsa', icon: Instagram, label: 'Instagram' },
+    { href: 'https://www.facebook.com/profile.php?id=61586705932748&locale=ar_AR', icon: Facebook, label: 'Facebook' },
+    { href: 'https://x.com/puremarketingsa', icon: Twitter, label: 'X' },
+    { href: 'https://linkedin.com', icon: Linkedin, label: 'LinkedIn' },
+    { href: 'https://youtube.com/@puremarketing_sa?si=Qeym4aXyIqSFZCYZ', icon: Youtube, label: 'YouTube' },
+    { href: 'https://tiktok.com/@puremarketingsa', icon: SiTiktok, label: 'TikTok' },
+    { href: 'https://www.snapchat.com/add/puremarketingsa', icon: SiSnapchat, label: 'Snapchat' },
+  ];
+
   const scrollToSection = (hash: string) => {
     setTimeout(() => {
       const element = document.querySelector(hash);
@@ -49,7 +57,6 @@ const Footer = () => {
 
   const handleNavClick = (hash: string) => {
     if (!hash) {
-      // Home link
       if (isHomePage) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
@@ -68,11 +75,11 @@ const Footer = () => {
   };
 
   return (
-    <footer className="rounded-t-sm bg-black text-white">
+    <footer className="rounded-t-sm bg-slate-900 text-white">
       <div className="container-custom section-padding">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* About */}
-          <div className="space-y-6">
+          <div className="space-y-6 lg:col-span-1">
             <Link
               to={`/${language}`}
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
@@ -82,54 +89,44 @@ const Footer = () => {
                 className="h-10 w-auto"
               />
             </Link>
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white/80 leading-relaxed text-sm">
               {t("footer.aboutText")}
             </p>
-            <div className="flex gap-4">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white/10 hover:bg-primary transition-colors">
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white/10 hover:bg-primary transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white/10 hover:bg-primary transition-colors">
-                <Linkedin className="w-5 h-5" />
-              </a>
+            <div className="flex flex-wrap gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="p-2 rounded-full bg-white/10 hover:bg-primary transition-colors">
+                  <social.icon className="w-4 h-4" />
+                </a>
+              ))}
             </div>
-            <div>
-              <div className="space-y-4">
-                <a
-                  href="tel:+966500000000"
-                  className={`flex items-center gap-3 text-white/80 hover:text-primary transition-colors`}>
-                  <Phone className="w-4 h-4 flex-shrink-0" />
-                  <span dir='ltr'>+966 50 000 0000</span>
-                </a>
-                <a
-                  href="mailto:info@puremarketing.sa"
-                  className="flex items-center gap-3 text-white/80 hover:text-primary transition-colors">
-                  <Mail className="w-4 h-4 flex-shrink-0" />
-                  <span>info@puremarketing.sa</span>
-                </a>
-                <div className="flex items-center gap-3 text-white/80">
-                  <MapPin className="w-4 h-4 flex-shrink-0" />
-                  <span>
-                    {language === "ar"
-                      ? "المملكة العربية السعودية"
-                      : "Saudi Arabia"}
-                  </span>
-                </div>
+            <div className="space-y-3">
+              <a
+                href="https://api.whatsapp.com/send?phone=9660569522042"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-white/80 hover:text-primary transition-colors text-sm">
+                <Phone className="w-4 h-4 flex-shrink-0" />
+                <span dir='ltr'>+966 56 952 2042</span>
+              </a>
+              <a
+                href="mailto:info@puremarketing.sa"
+                className="flex items-center gap-3 text-white/80 hover:text-primary transition-colors text-sm">
+                <Mail className="w-4 h-4 flex-shrink-0" />
+                <span>info@puremarketing.sa</span>
+              </a>
+              <div className="flex items-center gap-3 text-white/80 text-sm">
+                <MapPin className="w-4 h-4 flex-shrink-0" />
+                <span>
+                  {language === "ar"
+                    ? "المملكة العربية السعودية"
+                    : "Saudi Arabia"}
+                </span>
               </div>
             </div>
           </div>
@@ -142,7 +139,7 @@ const Footer = () => {
                 <li key={link.key}>
                   <button
                     onClick={() => handleNavClick(link.hash)}
-                    className="text-white/80 hover:text-primary transition-colors">
+                    className="text-white/80 hover:text-primary transition-colors text-sm">
                     {t(`nav.${link.key}`)}
                   </button>
                 </li>
@@ -160,7 +157,7 @@ const Footer = () => {
                 <li key={service.key}>
                   <Link
                     to={`/${language}/services/${service.slug}`}
-                    className="text-white/80 hover:text-primary transition-colors">
+                    className="text-white/80 hover:text-primary transition-colors text-sm">
                     {t(`services.${service.key}.title`)}
                   </Link>
                 </li>
@@ -184,7 +181,30 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* About Pure */}
+          <div>
+            <h4 className="text-lg font-bold mb-6">{t("footer.aboutPure")}</h4>
+            <ul className="space-y-3">
+              <li>
+                <a
+                  href="https://drive.google.com/file/d/1ekiGHLbX8jKhTXXwfTUx88r-aDaGcwVm/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/80 hover:text-primary transition-colors text-sm">
+                  {t("footer.pureProfile")}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://drive.google.com/file/d/1YBH9WQ_bKY0JkhuDlyZp93-Inm55mwYs/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/80 hover:text-primary transition-colors text-sm">
+                  {t("footer.purePortfolio")}
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         {/* Copyright */}
