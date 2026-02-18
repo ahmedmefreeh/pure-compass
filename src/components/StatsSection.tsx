@@ -83,7 +83,7 @@ const StatsSection = () => {
           <p className="text-lg text-muted-foreground">{t("stats.subtitle")}</p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-12 justify-items-center [&>*:last-child]:col-span-2 md:[&>*:last-child]:col-span-1">
           {stats.map((stat, index) => (
            
               <StatItem
