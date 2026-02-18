@@ -1,15 +1,28 @@
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowLeft, Play } from 'lucide-react';
+import { ArrowRight, ArrowLeft } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import successVideo from '@/assets/success-story.mp4';
 
 const CaseStudySection = () => {
   const { t } = useTranslation();
   const { language, isRTL } = useLanguage();
   const ref = useRef(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [hasPlayed, setHasPlayed] = useState(false);
+  const videoInView = useInView(videoRef, { once: true, amount: 0.5 });
+
+  useEffect(() => {
+    if (videoInView && videoRef.current && !hasPlayed) {
+      videoRef.current.play().catch(() => {
+        // Autoplay blocked, user can play manually
+      });
+      setHasPlayed(true);
+    }
+  }, [videoInView, hasPlayed]);
 
   return (
     <section ref={ref} className="hero-section section-padding">
@@ -32,7 +45,6 @@ const CaseStudySection = () => {
             <Link
               to={`/${language}/case-study`}
               className="btn-hero-primary inline-flex">
-              <Play className="w-5 h-5" />
               {t("caseStudy.cta")}
               {isRTL ? (
                 <ArrowLeft className="w-5 h-5" />
@@ -43,21 +55,19 @@ const CaseStudySection = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0}}
-            animate={isInView ? { opacity: 1} : {}}
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="order-1 lg:order-2">
             <div className="relative aspect-video rounded-2xl overflow-hidden border-4 border-white/20">
-              <img
-                src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=450&fit=crop"
-                alt="Medical Center Case Study"
+              <video
+                ref={videoRef}
+                src={successVideo}
+                muted
+                playsInline
+                preload="metadata"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-primary-dark/60 flex items-center justify-center">
-                <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-colors backdrop-blur-sm">
-                  <Play className="w-8 h-8 text-white fill-white" />
-                </div>
-              </div>
             </div>
           </motion.div>
         </div>
