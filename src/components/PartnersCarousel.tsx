@@ -48,8 +48,8 @@ const PartnersCarousel = () => {
         >
           {partners.map((partner) => (
             <SwiperSlide key={partner.id}>
-              <div className="flex items-center justify-center h-20">
-                <div className="partner-logo-container flex items-center justify-center bg-background rounded-lg px-6 py-3 border border-border hover:border-primary/30 transition-all duration-300">
+              <div className="flex items-center justify-center h-24">
+                <div className="partner-logo-container flex items-center justify-center bg-white rounded-2xl px-6 py-3 border border-border hover:border-primary/30 transition-all duration-300">
                   <img 
                     src={partner.logo} 
                     alt={partner.name}
