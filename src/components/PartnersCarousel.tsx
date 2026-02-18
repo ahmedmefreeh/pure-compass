@@ -53,7 +53,7 @@ const PartnersCarousel = () => {
                   <img 
                     src={partner.logo} 
                     alt={partner.name}
-                    className="h-12 w-auto object-contain grayscale hover:grayscale-0 opacity-70 hover:opacity-100 transition-all duration-300"
+                    className="h-20 w-auto object-contain transition-all duration-300"
                   />
                 </div>
               </div>
