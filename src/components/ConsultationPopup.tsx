@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send } from 'lucide-react';
+import { X, Send, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
+import { submitContactForm } from '@/services/contactApi';
 
 interface ConsultationPopupProps {
   isOpen: boolean;
@@ -11,6 +13,8 @@ interface ConsultationPopupProps {
 
 const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
   const { t } = useTranslation();
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -26,21 +30,27 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
     { key: 'websites', value: 'websites' },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const message = `
-*${t('contact.name')}:* ${formData.name}
-*${t('contact.phone')}:* ${formData.phone}
-*${t('contact.preferredContact')}:* ${formData.contactMethod === 'whatsapp' ? t('contact.whatsapp') : t('contact.phoneCall')}
-*${t('contact.selectService')}:* ${formData.service}
-*${t('contact.details')}:* ${formData.details}
-    `.trim();
+    setIsSubmitting(true);
 
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappNumber = '966500000000';
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-    onClose();
+    try {
+      await submitContactForm(formData);
+      toast({
+        title: t('contact.successTitle'),
+        description: t('contact.successMessage'),
+      });
+      setFormData({ name: '', phone: '', contactMethod: 'whatsapp', service: '', details: '' });
+      onClose();
+    } catch {
+      toast({
+        title: t('contact.errorTitle'),
+        description: t('contact.errorMessage'),
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -155,9 +165,13 @@ const ConsultationPopup = ({ isOpen, onClose }: ConsultationPopupProps) => {
                   />
                 </div>
 
-                <Button type="submit" size="lg" className="w-full gap-2">
-                  <Send className="w-5 h-5" />
-                  {t('contact.submit')}
+                <Button type="submit" size="lg" className="w-full gap-2" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <Send className="w-5 h-5" />
+                  )}
+                  {isSubmitting ? t('contact.sending') : t('contact.submit')}
                 </Button>
               </form>
             </div>

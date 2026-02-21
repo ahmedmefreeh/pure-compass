@@ -3,8 +3,10 @@ import { useTranslation } from "react-i18next";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Send, MessageCircle, Phone, Shield } from "lucide-react";
+import { Send, MessageCircle, Phone, Shield, Loader2, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { submitContactForm } from "@/services/contactApi";
 
 const ContactSection = () => {
   const { t } = useTranslation();
@@ -12,6 +14,8 @@ const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -27,27 +31,26 @@ const ContactSection = () => {
     { key: "websites", value: "websites" },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
-    const message = `
-*${t("contact.name")}:* ${formData.name}
-*${t("contact.phone")}:* ${formData.phone}
-*${t("contact.preferredContact")}:* ${
-      formData.contactMethod === "whatsapp"
-        ? t("contact.whatsapp")
-        : t("contact.phoneCall")
+    try {
+      await submitContactForm(formData);
+      toast({
+        title: t("contact.successTitle"),
+        description: t("contact.successMessage"),
+      });
+      setFormData({ name: "", phone: "", contactMethod: "whatsapp", service: "", details: "" });
+    } catch {
+      toast({
+        title: t("contact.errorTitle"),
+        description: t("contact.errorMessage"),
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-*${t("contact.selectService")}:* ${formData.service}
-*${t("contact.details")}:* ${formData.details}
-    `.trim();
-
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappNumber = "9660569522042";
-    window.open(
-      `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
-      "_blank"
-    );
   };
 
   return (
@@ -209,9 +212,13 @@ const ContactSection = () => {
                   />
                 </div>
 
-                <Button type="submit" size="lg" className="w-full gap-2">
-                  <Send className="w-5 h-5" />
-                  {t("contact.submit")}
+                <Button type="submit" size="lg" className="w-full gap-2" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <Send className="w-5 h-5" />
+                  )}
+                  {isSubmitting ? t("contact.sending") : t("contact.submit")}
                 </Button>
               </form>
             </div>
