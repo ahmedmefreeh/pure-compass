@@ -19,7 +19,7 @@ const BackButton = () => {
     <Button
       variant="ghost"
       onClick={handleBack}
-      className="gap-2 mb-6 hover:bg-muted"
+      className="gap-2 mb-6 hover:bg-transparent md:hover:bg-primary md:hover:text-primary-foreground transition-colors"
     >
       {isRTL ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
       {isRTL ? 'العودة للصفحة السابقة' : 'Back to Previous Page'}
