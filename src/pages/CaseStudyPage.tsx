@@ -11,6 +11,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { useScrollToTop } from '@/hooks/useScrollToTop';
 import { caseStudyContent } from '@/data/content';
+import BackButton from '@/components/BackButton';
 
 const CaseStudyPage = () => {
   const { t } = useTranslation();
@@ -31,6 +32,9 @@ const CaseStudyPage = () => {
       <Header />
 
       <main className="pt-20">
+        <div className="container-custom pt-6">
+          <BackButton />
+        </div>
         {/* Hero Section */}
         <section className="hero-section section-padding">
           <div className="container-custom">

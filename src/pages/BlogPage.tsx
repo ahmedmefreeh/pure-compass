@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet-async';
 import { useScrollToTop } from '@/hooks/useScrollToTop';
 import { getBlogPost } from '@/data/content';
 import { Button } from '@/components/ui/button';
+import BackButton from '@/components/BackButton';
 
 const BlogPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -108,6 +109,9 @@ const BlogPage = () => {
       <Header />
 
       <main className="pt-20">
+        <div className="container-custom pt-6">
+          <BackButton />
+        </div>
         {/* Hero */}
         <section className="hero-section py-20 lg:py-32">
           <div className="container-custom">
