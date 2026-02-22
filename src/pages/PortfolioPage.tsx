@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { useScrollToTop } from '@/hooks/useScrollToTop';
+import BackButton from '@/components/BackButton';
 
 const PortfolioPage = () => {
   const { t } = useTranslation();
@@ -67,6 +68,9 @@ const PortfolioPage = () => {
       <Header />
       
       <main className="pt-20">
+        <div className="container-custom pt-6">
+          <BackButton />
+        </div>
         {/* Hero */}
         <section className="hero-section py-20 md:py-28">
           <div className="container-custom text-center">

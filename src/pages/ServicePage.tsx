@@ -10,6 +10,7 @@ import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import { Helmet } from 'react-helmet-async';
 import { useScrollToTop } from '@/hooks/useScrollToTop';
+import BackButton from '@/components/BackButton';
 
 const serviceKeys: Record<string, string> = {
   'social-media-management': 'socialMedia',
@@ -49,6 +50,9 @@ const ServicePage = () => {
       <Header />
 
       <main className="pt-20">
+        <div className="container-custom pt-6">
+          <BackButton />
+        </div>
         {/* Hero Section */}
         <section className="hero-section py-20 lg:py-32">
           <div className="container-custom">
