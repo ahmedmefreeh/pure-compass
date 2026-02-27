@@ -23,9 +23,9 @@
     "contact": "Contact"
   },
   "hero": {
-    "title": "Pure Marketing - Your Complete Destination for Digital Dominance",
-    "subtitle": "We are the compass that brings all your growth solutions to one station - from social media management and smart advertising campaigns, to building e-commerce stores and creating visual and cinematic content.",
-    "cta": "We lead your brand towards sustainable growth that never stops",
+    "badge": "Pure Marketing for Digital Marketing",
+    "title": "A complete ecosystem for all digital growth needs;\nFrom digital strategies and smart campaigns, to building integrated stores and creative visual production.",
+    "cta": "Where quality meets innovation, to make the difference",
     "contactNow": "Contact Us Now",
     "bookConsultation": "Book Free Consultation"
   },
@@ -158,19 +158,34 @@
     "title": "Success Partners' Voices",
     "subtitle": "Voices from the field... Our success is measured by our partners' satisfaction and their growth stories.",
     "testimonial1": {
-      "name": "Abu Fahad",
-      "role": "E-commerce Store Owner",
-      "text": "My experience with Pure Marketing was a turning point. Store sales increased significantly, and the transparency in reports made me very comfortable."
+      "name": "Abu Saud",
+      "role": "Retail Entrepreneur",
+      "text": "Honestly, I was hesitant at first about the e-commerce store and how to integrate it with Mada and shipping companies, but Pure Marketing took my idea and delivered a store that exceeded expectations."
     },
     "testimonial2": {
-      "name": "Sarah",
-      "role": "Marketing Director - Medical Center",
-      "text": "The professionalism in managing Snapchat campaigns was amazing. We achieved booking numbers we never expected in record time."
+      "name": "Sarah Al-Qahtani",
+      "role": "Fashion Designer",
+      "text": "My experience with Pure in brand identity design was exceptional. The kickoff meeting made things so much easier, and the logo turned out incredibly luxurious. Thank you!"
     },
     "testimonial3": {
-      "name": "Khalid",
-      "role": "Entrepreneur",
-      "text": "What distinguishes them most is their deep understanding of Saudi taste. The motion graphics they made for my brand brought unprecedented engagement."
+      "name": "Eng. Khalid Al-Shammari",
+      "role": "Marketing Director - Real Estate Company",
+      "text": "Our social media management needed a clear strategy, not just posting. Pure Marketing helped us with that, especially tracking results through Notion."
+    },
+    "testimonial4": {
+      "name": "Abdullah Al-Fahd",
+      "role": "Electronics Store Owner",
+      "text": "The website is incredibly fast and perfectly mobile-compatible. SEO started showing results from the first month. Truly professional technical competence."
+    },
+    "testimonial5": {
+      "name": "Faisal Al-Hakimi",
+      "role": "Restaurant Manager",
+      "text": "What I liked most about Pure is their trend tracking on social media. Here in Jeddah, trends change fast and the Pure team is always ready."
+    },
+    "testimonial6": {
+      "name": "Abu Abdulaziz",
+      "role": "Owner of Al-Rukn Al-Fakhir Brand",
+      "text": "I sat with the Pure team and honestly what caught my attention wasn't just their designs. It was their organization, commitment, and team expertise. God willing, this won't be our last collaboration."
     }
   },
   "closing": {
