@@ -14,7 +14,7 @@ const TestimonialsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const testimonials = ['testimonial1', 'testimonial2', 'testimonial3'];
+  const testimonials = ['testimonial1', 'testimonial2', 'testimonial3', 'testimonial4', 'testimonial5', 'testimonial6'];
 
   return (
     <section ref={ref} className="section-padding bg-background overflow-hidden">

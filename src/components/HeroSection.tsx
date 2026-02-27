@@ -28,27 +28,27 @@ const HeroSection = () => {
         <div className="flex flex-col gap-8 lg:gap-12 items-center lg:items-start lg:max-w-[55%]">
           {/* Text Content */}
           <div className="text-center lg:text-start">
-            <motion.h1
+            <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-[2rem] md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">
+              className="text-base md:text-lg text-white/80 mb-4">
+              {t("hero.badge")}
+            </motion.p>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-[1.6rem] md:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-white whitespace-pre-line">
               {t("hero.title")}
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg md:text-xl lg:text-2xl text-white/90 mb-4 leading-relaxed">
-              {t("hero.subtitle")}
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-xl md:text-2xl font-semibold mb-10 text-white">
+              className="text-base md:text-lg text-white/80 mb-10">
               {t("hero.cta")}
             </motion.p>
 
